@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+         <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.myHospital.app</groupId>
   <artifactId>DeustMedik</artifactId>
@@ -12,12 +14,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- this properties specify the source and target format of our code -->
-    <!-- <maven.compiler.source>1.8</maven.compiler.source> -->
-    <!-- <maven.compiler.target>1.8</maven.compiler.target> -->
     <!-- starting from JDK 9 is better to use the release property as it checks
       if we are using API libraries that are no available in the specified version -->
-    <maven.compiler.release>8</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
   </properties>
 
   <dependencies>
@@ -26,21 +25,27 @@
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
       <scope>test</scope>
-      </dependency>
-     <!-- Dependencia para MySQL -->
-      <dependency>
+    </dependency>
+      
+    <!-- Dependencia para MySQL -->
+    <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.28</version> <!-- Usa la última versión -->
-      </dependency>
+    </dependency>
 
-      <dependency>
-        <groupId>jakarta.persistence</groupId>
-        <artifactId>jakarta.persistence-api</artifactId>
-        <version>3.1.0</version>
-        <scope>provided</scope>
-     </dependency>
+    <dependency>
+      <groupId>jakarta.persistence</groupId>
+      <artifactId>jakarta.persistence-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
     
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <version>3.2.0</version> <!-- Cambia esto por la última versión estable -->
+    </dependency>
   </dependencies>
 
   <build>
@@ -59,6 +64,24 @@
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <excludes>
+          <exclude>**/*.db</exclude>
+          <exclude>**/*.jpg</exclude>
+          <exclude>**/*.png</exclude>
+          <exclude>**/*.gif</exclude>
+          <!-- Agrega otros formatos binarios si es necesario -->
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>**/*.db</include>
+          <include>**/*.jpg</include>
+          <include>**/*.png</include>
+          <include>**/*.gif</include>
+          <!-- Incluye los mismos formatos que excluiste arriba -->
+        </includes>
       </resource>
     </resources>
   </build>
