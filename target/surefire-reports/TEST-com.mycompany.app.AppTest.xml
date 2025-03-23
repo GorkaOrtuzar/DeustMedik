@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.mycompany.app.AppTest" time="0.057" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.mycompany.app.AppTest" time="0.056" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\example-maven-basic\target\test-classes;C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\example-maven-basic\target\classes;C:\Users\gorka\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\gorka\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="java.class.path" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\target\test-classes;C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\target\classes;C:\Users\gorka\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\gorka\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\gorka\.m2\repository\mysql\mysql-connector-java\8.0.28\mysql-connector-java-8.0.28.jar;C:\Users\gorka\.m2\repository\com\google\protobuf\protobuf-java\3.11.4\protobuf-java-3.11.4.jar;"/>
     <property name="java.vm.vendor" value="Eclipse Adoptium"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-21.0.4.7-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\gorka\AppData\Local\Temp\surefire14157550992523767932\surefirebooter-20250321212258345_3.jar C:\Users\gorka\AppData\Local\Temp\surefire14157550992523767932 2025-03-21T21-22-58_024-jvmRun1 surefire-20250321212258345_1tmp surefire_0-20250321212258345_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\gorka\AppData\Local\Temp\surefire12566231949885321800\surefirebooter-20250323133214811_3.jar C:\Users\gorka\AppData\Local\Temp\surefire12566231949885321800 2025-03-23T13-32-14_674-jvmRun1 surefire-20250323133214811_1tmp surefire_0-20250323133214811_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\example-maven-basic\target\test-classes;C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\example-maven-basic\target\classes;C:\Users\gorka\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\gorka\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\target\test-classes;C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\target\classes;C:\Users\gorka\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\gorka\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\gorka\.m2\repository\mysql\mysql-connector-java\8.0.28\mysql-connector-java-8.0.28.jar;C:\Users\gorka\.m2\repository\com\google\protobuf\protobuf-java\3.11.4\protobuf-java-3.11.4.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\gorka"/>
     <property name="user.language" value="es"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2024-07-16"/>
     <property name="java.home" value="C:\Program Files\Eclipse Adoptium\jdk-21.0.4.7-hotspot"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\example-maven-basic"/>
+    <property name="basedir" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\gorka\AppData\Local\Temp\surefire14157550992523767932\surefirebooter-20250321212258345_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\gorka\AppData\Local\Temp\surefire12566231949885321800\surefirebooter-20250323133214811_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.4+7-LTS"/>
@@ -46,7 +46,7 @@
     <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
     <property name="java.io.tmpdir" value="C:\Users\gorka\AppData\Local\Temp\"/>
     <property name="java.version" value="21.0.4"/>
-    <property name="user.dir" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\example-maven-basic"/>
+    <property name="user.dir" value="C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
@@ -59,5 +59,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.mycompany.app.AppTest" time="0.007"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.mycompany.app.AppTest" time="0.003"/>
 </testsuite>

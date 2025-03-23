@@ -34,6 +34,12 @@
       <version>8.0.28</version> <!-- Usa la última versión -->
       </dependency>
 
+      <dependency>
+        <groupId>jakarta.persistence</groupId>
+        <artifactId>jakarta.persistence-api</artifactId>
+        <version>3.1.0</version>
+        <scope>provided</scope>
+     </dependency>
     
   </dependencies>
 
