@@ -8,14 +8,8 @@ public abstract class Persona implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String dni;
-
-    @Column(nullable = false)
     private String nombre;
-
-    @Column(nullable = false)
     private String apellido;
-
-    @Column(nullable = false)
     private String telefono;
 
     public Persona() {
