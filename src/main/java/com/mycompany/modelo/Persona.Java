@@ -6,10 +6,6 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class Persona implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, unique = true)
     private String dni;
 
@@ -30,14 +26,6 @@ public abstract class Persona implements Serializable {
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getDni() {

@@ -9,7 +9,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Medico")
 public class Medico extends Persona {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String especialidad;
     private String contacto;
 
@@ -24,6 +28,13 @@ public class Medico extends Persona {
         this.contacto = contacto;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getEspecialidad() {
         return especialidad;
