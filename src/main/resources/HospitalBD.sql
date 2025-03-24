@@ -38,6 +38,15 @@ CREATE TABLE Cita (
 	FOREIGN KEY (medico_id) REFERENCES Medico(id)    
 );
 
+CREATE TABLE Horario (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    medico_id BIGINT NOT NULL,
+    dia DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    FOREIGN KEY (medico_id) REFERENCES Medico(id) ON DELETE CASCADE
+);
+
 INSERT INTO Medico (DNI, Nombre, Apellido, Especialidad, Contacto) VALUES
 ('79230672L', 'Naroa', 'Azcona', 'Digestivo', 'naroa.azcona@opendeusto.es'),
 ('79457623M', 'Gorka', 'Ortuzar', 'Endocrino', 'gorka.ortuzar@opendeusto.es'),
@@ -45,6 +54,13 @@ INSERT INTO Medico (DNI, Nombre, Apellido, Especialidad, Contacto) VALUES
 ('30897639H', 'Jorge', 'Martinez', 'Cardiologia', 'jorge.martinez@opendeusto.es'),
 ('30561342T', 'Ander', 'Perez', 'Hematologia', 'ander.martinez@opendeusto.es'),
 ('79542098Q', 'Paula', 'Gonzalez', 'Urgencias', 'paula.gonzalez@opendeusto.es'),
-('79113006P', 'Ainhoa', 'Saez', 'Traumatologia', 'ainhoa.saez@opendeusto.es')
+('79113006P', 'Ainhoa', 'Saez', 'Traumatologia', 'ainhoa.saez@opendeusto.es');
+
+INSERT INTO Horario (medico_id, dia, hora_inicio, hora_fin) VALUES
+(1, '2025-03-25', '09:00', '13:00'),
+(2, '2025-03-26', '10:00', '14:00'),
+(3, '2025-03-27', '08:00', '12:00'),
+(4, '2025-03-28', '11:00', '15:00'),
+(5, '2025-03-29', '12:00', '16:00');
 
 
