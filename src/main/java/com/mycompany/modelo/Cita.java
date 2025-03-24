@@ -14,9 +14,13 @@ public class Cita {
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
 
+    @Column(name = "Paciente")
     private String pacienteNombre;
+    @Column(name = "Apellido")
     private String pacienteApellido;
+    @Column(name = "Feche")
     private LocalDateTime fechaHora;
+    @Column(name = "Motivo de Visita")
     private String motivo;
 
     public Cita() {

@@ -1,9 +1,12 @@
 package com.mycompany.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,12 +17,21 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "DNI")
     private String dni;
+    @Column(name = "Nombre")
     private String nombre;
+    @Column(name = "Apellido")
     private String apellido;
+    @Column(name = "Correo")
     private String correo;
+    @Column(name = "Contraseña")
     private String contrasenia;
-    private String diagnostico;
+    @Column(name = "Historial")
+    private String historial;
+    
+    @OneToOne
+    @JoinColumn(name = "medico_id")
     private Medico medico;
 
     // No-argument constructor
@@ -28,13 +40,13 @@ public class Paciente {
     }
 
     public Paciente(String dni, String nombre,String apellido, String correo,
-    String contrasenia, String diagnostico, Medico medico ){
+    String contrasenia, String historial, Medico medico ){
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.diagnostico = diagnostico;
+        this.historial = historial;
         this.medico = medico;
     }
 
@@ -58,8 +70,8 @@ public class Paciente {
         return contrasenia;
     }
 
-    public String getDiagnostico() {
-        return diagnostico;
+    public String getHistorial() {
+        return historial;
     }
 
     public Medico getMedico() {

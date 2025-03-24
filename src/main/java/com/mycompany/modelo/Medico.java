@@ -1,5 +1,6 @@
 package com.mycompany.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,10 +15,15 @@ public class Medico  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "DNI")
     private String dni;
+    @Column(name = "Nombre")
     private String nombre;
+    @Column(name = "Apellido")
     private String apellido;
+    @Column(name = "Especialidad")
     private String especialidad;
+    @Column(name = "Contacto")
     private String contacto;
 
     // No-argument constructor
