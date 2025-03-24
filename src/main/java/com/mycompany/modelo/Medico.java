@@ -8,12 +8,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Medico")
-public class Medico extends Persona {
+public class Medico  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String dni;
+    private String nombre;
+    private String apellido;
     private String especialidad;
     private String contacto;
 
@@ -22,8 +25,7 @@ public class Medico extends Persona {
         super();
     }
 
-    public Medico(String dni, String nombre, String apellido, String telefono, String especialidad, String contacto) {
-        super(dni, nombre, apellido, telefono);
+    public Medico(String dni, String nombre, String apellido, String especialidad, String contacto) {
         this.especialidad = especialidad;
         this.contacto = contacto;
     }
@@ -36,6 +38,24 @@ public class Medico extends Persona {
         this.id = id;
     }
 
+    public String getDni() {
+        return dni;
+    }
+    public void setDni(String dni) {
+        this.dni = dni;
+    }  
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    } 
+    public String getApellido() {
+        return apellido;
+    }
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
     public String getEspecialidad() {
         return especialidad;
     }

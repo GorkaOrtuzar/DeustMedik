@@ -37,7 +37,6 @@ public class MedicoController {
                     m.setDni(medicoActualizado.getDni());
                     m.setNombre(medicoActualizado.getNombre());
                     m.setApellido(medicoActualizado.getApellido());
-                    m.setTelefono(medicoActualizado.getTelefono());
                     m.setEspecialidad(medicoActualizado.getEspecialidad());
                     m.setContacto(medicoActualizado.getContacto());
                     return repositorioMedico.save(m);
