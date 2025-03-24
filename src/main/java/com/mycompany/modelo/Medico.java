@@ -26,6 +26,9 @@ public class Medico  {
     }
 
     public Medico(String dni, String nombre, String apellido, String especialidad, String contacto) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.especialidad = especialidad;
         this.contacto = contacto;
     }
