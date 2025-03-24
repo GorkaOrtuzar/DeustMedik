@@ -1,8 +1,0 @@
-com\mycompany\controller\MedicoController.class
-com\mycompany\service\MedicoService.class
-com\mycompany\modelo\Cita.class
-com\mycompany\repositorio\RepositorioCita.class
-com\mycompany\service\RestApiApplication.class
-com\mycompany\modelo\Persona.class
-com\mycompany\repositorio\RepositorioMedico.class
-com\mycompany\modelo\Medico.class
