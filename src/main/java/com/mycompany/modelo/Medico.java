@@ -25,18 +25,22 @@ public class Medico  {
     private String especialidad;
     @Column(name = "Contacto")
     private String contacto;
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Horario> horarios = new ArrayList<>();
+
 
     // No-argument constructor
     public Medico() {
         super();
     }
 
-    public Medico(String dni, String nombre, String apellido, String especialidad, String contacto) {
+    public Medico(String dni, String nombre, String apellido, String especialidad, String contacto, List<Horario> horarios) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.especialidad = especialidad;
         this.contacto = contacto;
+        this.horarios = horarios != null ? horarios : new ArrayList<>();
     }
 
     public Long getId() {
@@ -78,5 +82,23 @@ public class Medico  {
 
     public void setContacto(String contacto) {
         this.contacto = contacto;
+    }
+
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
+    }
+
+    public void addHorario(Horario horario) {
+        horario.setMedico(this);
+        this.horarios.add(horario);
+    }
+
+    public void removeHorario(Horario horario) {
+        this.horarios.remove(horario);
+        horario.setMedico(null);
     }
 }
