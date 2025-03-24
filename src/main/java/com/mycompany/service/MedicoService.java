@@ -1,7 +1,9 @@
 package com.mycompany.service;
 
 import com.mycompany.modelo.Medico;
+import com.mycompany.modelo.Horario;
 import com.mycompany.repositorio.RepositorioMedico;
+import com.mycompany.repositorio.RepositorioHorario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class MedicoService {
 
     @Autowired
     private RepositorioMedico repositorioMedico;
+
+    @Autowired
+    private RepositorioHorario repositorioHorario;
 
     public List<Medico> obtenerTodos() {
         return repositorioMedico.findAll();
@@ -40,6 +45,34 @@ public class MedicoService {
     }
 
     public void eliminarMedico(Long id) {
-        repositorioMedico.deleteById(id);
+        if (repositorioHorario.findByMedico(repositorioMedico.findById(id).orElseThrow(
+                () -> new RuntimeException("Médico no encontrado"))).isEmpty()) {
+            repositorioMedico.deleteById(id);
+        } else {
+            throw new RuntimeException("No se puede eliminar el médico porque tiene horarios asignados.");
+        }
+    }
+
+    public List<Medico> obtenerPorEspecialidad(String especialidad) {
+        return repositorioMedico.findByEspecialidad(especialidad);
+    }
+
+    public List<Medico> obtenerMedicosDisponibles() {
+        return repositorioMedico.findByDisponibilidadTrue();
+    }
+
+    public Horario asignarHorarioAMedico(Long medicoId, Horario horario) {
+        Medico medico = repositorioMedico.findById(medicoId)
+                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+
+        horario.setMedico(medico);
+        return repositorioHorario.save(horario);
+    }
+
+    public List<Horario> obtenerHorariosPorMedico(Long medicoId) {
+        Medico medico = repositorioMedico.findById(medicoId)
+                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+
+        return repositorioHorario.findByMedico(medico);
     }
 }

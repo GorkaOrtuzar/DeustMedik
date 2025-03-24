@@ -1,7 +1,10 @@
 package com.mycompany.controller;
 
+import com.mycompany.modelo.Horario;
 import com.mycompany.modelo.Medico;
+import com.mycompany.service.MedicoService;
 import com.mycompany.repositorio.RepositorioMedico;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,39 +16,55 @@ import java.util.Optional;
 public class MedicoController {
 
     @Autowired
-    private RepositorioMedico repositorioMedico;
+    private MedicoService medicoService;
 
     @GetMapping
     public List<Medico> obtenerTodos() {
-        return repositorioMedico.findAll();
+        return medicoService.obtenerTodos();
     }
 
     @GetMapping("/{id}")
     public Optional<Medico> obtenerPorId(@PathVariable Long id) {
-        return repositorioMedico.findById(id);
+        return medicoService.obtenerPorId(id);
     }
 
     @PostMapping
     public Medico agregarMedico(@RequestBody Medico medico) {
-        return repositorioMedico.save(medico);
+        return medicoService.agregarMedico(medico);
     }
 
     @PutMapping("/{id}")
     public Medico actualizarMedico(@PathVariable Long id, @RequestBody Medico medicoActualizado) {
-        return repositorioMedico.findById(id)
-                .map(m -> {
-                    m.setDni(medicoActualizado.getDni());
-                    m.setNombre(medicoActualizado.getNombre());
-                    m.setApellido(medicoActualizado.getApellido());
-                    m.setEspecialidad(medicoActualizado.getEspecialidad());
-                    m.setContacto(medicoActualizado.getContacto());
-                    return repositorioMedico.save(m);
-                })
-                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+        return medicoService.actualizarMedico(id, medicoActualizado);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarMedico(@PathVariable Long id) {
-        repositorioMedico.deleteById(id);
+    public ResponseEntity<?> eliminarMedico(@PathVariable Long id) {
+        try {
+            medicoService.eliminarMedico(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/especialidad/{especialidad}")
+    public List<Medico> obtenerPorEspecialidad(@PathVariable String especialidad) {
+        return medicoService.obtenerPorEspecialidad(especialidad);
+    }
+
+    @GetMapping("/disponibles")
+    public List<Medico> obtenerMedicosDisponibles() {
+        return medicoService.obtenerMedicosDisponibles();
+    }
+
+    @PostMapping("/{id}/horarios")
+    public ResponseEntity<Horario> asignarHorarioAMedico(@PathVariable Long id, @RequestBody Horario horario) {
+        return ResponseEntity.ok(medicoService.asignarHorarioAMedico(id, horario));
+    }
+
+    @GetMapping("/{id}/horarios")
+    public ResponseEntity<List<Horario>> obtenerHorariosPorMedico(@PathVariable Long id) {
+        return ResponseEntity.ok(medicoService.obtenerHorariosPorMedico(id));
     }
 }
