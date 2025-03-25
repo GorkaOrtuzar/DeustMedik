@@ -85,4 +85,19 @@ public class MedicoController {
     public ResponseEntity<List<Horario>> obtenerHorariosPorMedico(@PathVariable Long id) {
         return ResponseEntity.ok(medicoService.obtenerHorariosPorMedico(id));
     }
+
+    @GetMapping("/disponibles/cita")
+    public ResponseEntity<List<Medico>> obtenerMedicosDisponiblesParaCita(
+            @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            @RequestParam("hora") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime hora) {
+
+        List<Medico> medicosDisponibles = medicoService.obtenerMedicosDisponiblesParaCita(fecha, hora);
+
+        if (medicosDisponibles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(medicosDisponibles);
+        }
+    }
+
 }

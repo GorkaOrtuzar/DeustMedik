@@ -3,11 +3,13 @@ package com.mycompany.service;
 import com.mycompany.modelo.Medico;
 import com.mycompany.modelo.Horario;
 import com.mycompany.repositorio.RepositorioMedico;
+import com.mycompany.repositorio.RepositorioCita;
 import com.mycompany.repositorio.RepositorioHorario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,9 @@ public class MedicoService {
 
     @Autowired
     private RepositorioHorario repositorioHorario;
+
+    @Autowired
+    private RepositorioCita repositorioCita;
 
     public List<Medico> obtenerTodos() {
         return repositorioMedico.findAll();
@@ -81,4 +86,14 @@ public class MedicoService {
     public List<Medico> obtenerMedicosDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) {
         return repositorioMedico.findMedicosDisponibles(fecha, horaInicio, horaFin);
     }
+
+    public List<Medico> obtenerMedicosDisponiblesParaCita(LocalDate fecha, LocalTime hora) {
+    LocalDateTime fechaHora = LocalDateTime.of(fecha, hora);
+
+    List<Medico> medicosConCita = repositorioCita.findMedicosConCitaEnFecha(fechaHora);
+    List<Medico> medicosDisponibles = repositorioMedico.findMedicosDisponibles(fecha, hora, hora.plusMinutes(30));
+    medicosDisponibles.removeAll(medicosConCita);
+
+    return medicosDisponibles;
+}
 }
