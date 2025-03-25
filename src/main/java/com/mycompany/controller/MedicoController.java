@@ -3,8 +3,8 @@ package com.mycompany.controller;
 import com.mycompany.modelo.Horario;
 import com.mycompany.modelo.Medico;
 import com.mycompany.service.MedicoService;
-import com.mycompany.repositorio.RepositorioMedico;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +20,20 @@ public class MedicoController {
 
     @Autowired
     private MedicoService medicoService;
+
+    @GetMapping("/buscar")
+    public String buscarMedicos(Model model) {
+        List<Medico> medicos = medicoService.obtenerTodos();
+        model.addAttribute("medicos", medicos);
+        return "medicos/lista-medicos";
+    }
+    
+    @GetMapping  // Lista de médicos en página web
+    public String obtenerTodos(Model model) {
+        List<Medico> medicos = medicoService.obtenerTodos();
+        model.addAttribute("medicos", medicos);
+        return "medicos/lista-medicos";  // Nombre de la vista Thymeleaf
+    }
 
     @GetMapping
     public List<Medico> obtenerTodos() {
