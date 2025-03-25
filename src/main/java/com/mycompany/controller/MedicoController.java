@@ -36,10 +36,7 @@ public class MedicoController {
         return "medicos/lista-medicos";  // Nombre de la vista Thymeleaf
     }
 
-    @GetMapping
-    public List<Medico> obtenerTodos() {
-        return medicoService.obtenerTodos();
-    }
+   
 
     @GetMapping("/{id}")
     public Optional<Medico> obtenerPorId(@PathVariable Long id) {
