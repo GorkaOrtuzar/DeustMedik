@@ -39,7 +39,7 @@ CREATE TABLE Cita (
     Apellido VARCHAR(100),
     Fecha DATETIME,
 	Motivo TEXT,
-	FOREIGN KEY (medico_id) REFERENCES Medico(id)    
+	FOREIGN KEY (medico_id) REFERENCES Medico(id) ON DELETE CASCADE   
 );
 
 CREATE TABLE Horario (

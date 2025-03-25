@@ -26,6 +26,8 @@ public class Medico  {
     private boolean disponibilidad;
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Horario> horarios = new ArrayList<>();
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cita> citas = new ArrayList<>();
 
 
     // No-argument constructor
@@ -108,4 +110,13 @@ public class Medico  {
         this.horarios.remove(horario);
         horario.setMedico(null);
     }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+    
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
+    
 }

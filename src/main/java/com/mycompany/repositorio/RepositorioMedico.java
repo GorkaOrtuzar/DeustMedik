@@ -15,7 +15,7 @@ public interface RepositorioMedico extends JpaRepository<Medico, Long> {
 
     List<Medico> findByDisponibilidadTrue();
 
-    Optional<Medico> findByCorreo(String correo);
+    Optional<Medico> findByContacto(String contacto);
 
     boolean existsByIdAndCitasIsNotEmpty(Long id);
 
