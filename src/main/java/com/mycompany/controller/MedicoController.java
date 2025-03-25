@@ -7,7 +7,10 @@ import com.mycompany.repositorio.RepositorioMedico;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,9 +56,24 @@ public class MedicoController {
         return medicoService.obtenerPorEspecialidad(especialidad);
     }
 
+    @GetMapping("/disponibles/todos")
+    public List<Medico> obtenerTodosLosMedicosDisponibles() {
+        return medicoService.obtenerTodosLosMedicosDisponibles();
+    }
+
     @GetMapping("/disponibles")
-    public List<Medico> obtenerMedicosDisponibles() {
-        return medicoService.obtenerMedicosDisponibles();
+    public ResponseEntity<List<Medico>> obtenerMedicosDisponibles(
+            @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            @RequestParam("horaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime horaInicio,
+            @RequestParam("horaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime horaFin) {
+
+        List<Medico> medicosDisponibles = medicoService.obtenerMedicosDisponibles(fecha, horaInicio, horaFin);
+
+        if (medicosDisponibles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(medicosDisponibles);
+        }
     }
 
     @PostMapping("/{id}/horarios")

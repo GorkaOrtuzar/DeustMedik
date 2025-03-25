@@ -7,6 +7,8 @@ import com.mycompany.repositorio.RepositorioHorario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +59,7 @@ public class MedicoService {
         return repositorioMedico.findByEspecialidad(especialidad);
     }
 
-    public List<Medico> obtenerMedicosDisponibles() {
+    public List<Medico> obtenerTodosLosMedicosDisponibles() {
         return repositorioMedico.findByDisponibilidadTrue();
     }
 
@@ -74,5 +76,9 @@ public class MedicoService {
                 .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
 
         return repositorioHorario.findByMedico(medico);
+    }
+
+    public List<Medico> obtenerMedicosDisponibles(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin) {
+        return repositorioMedico.findMedicosDisponibles(fecha, horaInicio, horaFin);
     }
 }
