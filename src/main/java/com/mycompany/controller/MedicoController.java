@@ -4,6 +4,7 @@ import com.mycompany.modelo.Horario;
 import com.mycompany.modelo.Medico;
 import com.mycompany.service.MedicoService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/api/medicos")
 public class MedicoController {
 
