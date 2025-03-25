@@ -16,9 +16,21 @@ public class HorarioService {
     private RepositorioHorario repositorioHorario;
 
     public Horario guardarHorario(Horario horario) {
+        if (horario.getHoraInicio().isAfter(horario.getHoraFin())) {
+            throw new IllegalArgumentException("La hora de inicio no puede ser mayor que la hora de fin.");
+        }
+    
+        List<Horario> horariosExistentes = repositorioHorario.findByMedicoAndDia(horario.getMedico(), horario.getDia());
+        for (Horario existente : horariosExistentes) {
+            if (!(horario.getHoraFin().isBefore(existente.getHoraInicio()) || 
+                  horario.getHoraInicio().isAfter(existente.getHoraFin()))) {
+                throw new IllegalArgumentException("El horario se solapa con otro ya existente.");
+            }
+        }
+    
         return repositorioHorario.save(horario);
     }
-
+    
     public List<Horario> obtenerHorariosPorMedico(Medico medico) {
         return repositorioHorario.findByMedico(medico);
     }
