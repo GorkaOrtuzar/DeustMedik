@@ -1,11 +1,5 @@
 package com.mycompany.modelo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +22,8 @@ public class Medico  {
     private String especialidad;
     @Column(name = "Contacto")
     private String contacto;
+    @Column(name = "Disponibilidad")
+    private boolean disponibilidad;
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Horario> horarios = new ArrayList<>();
 
@@ -93,6 +89,14 @@ public class Medico  {
 
     public void setHorarios(List<Horario> horarios) {
         this.horarios = horarios;
+    }
+
+    public boolean isDisponibilidad() {
+        return disponibilidad; 
+    }
+    
+    public void setDisponibilidad(boolean disponibilidad) { 
+        this.disponibilidad = disponibilidad;
     }
 
     public void addHorario(Horario horario) {

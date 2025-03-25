@@ -7,13 +7,17 @@ GRANT ALL PRIVILEGES ON deustmedik.* TO 'deustuser'@'localhost';
 FLUSH PRIVILEGES;
 
 USE deustmedik;
+
+DROP TABLE IF EXISTS Medico;
+
 CREATE TABLE Medico (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
     DNI VARCHAR(20),
     Nombre VARCHAR(20),
     Apellido VARCHAR(20),
     Especialidad VARCHAR(100),
-    Contacto VARCHAR(100)
+    Contacto VARCHAR(100),
+    Disponibilidad BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE Paciente (
@@ -47,6 +51,8 @@ CREATE TABLE Horario (
     FOREIGN KEY (medico_id) REFERENCES Medico(id) ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS Paciente;
+
 CREATE TABLE Paciente (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     DNI VARCHAR(20) NOT NULL,
@@ -59,14 +65,15 @@ CREATE TABLE Paciente (
     FOREIGN KEY (medico_id) REFERENCES Medico(id) ON DELETE SET NULL
 );
 
-INSERT INTO Medico (DNI, Nombre, Apellido, Especialidad, Contacto) VALUES
-('79230672L', 'Naroa', 'Azcona', 'Digestivo', 'naroa.azcona@opendeusto.es'),
-('79457623M', 'Gorka', 'Ortuzar', 'Endocrino', 'gorka.ortuzar@opendeusto.es'),
-('16784523R', 'Jacqueline', 'Furelos', 'Cabecera', 'jacqueline.furelos@opendeusto.es'),
-('30897639H', 'Jorge', 'Martinez', 'Cardiologia', 'jorge.martinez@opendeusto.es'),
-('30561342T', 'Ander', 'Perez', 'Hematologia', 'ander.martinez@opendeusto.es'),
-('79542098Q', 'Paula', 'Gonzalez', 'Urgencias', 'paula.gonzalez@opendeusto.es'),
-('79113006P', 'Ainhoa', 'Saez', 'Traumatologia', 'ainhoa.saez@opendeusto.es');
+INSERT INTO Medico (DNI, Nombre, Apellido, Especialidad, Contacto, Disponibilidad) VALUES
+('79230672L', 'Naroa', 'Azcona', 'Digestivo', 'naroa.azcona@opendeusto.es', TRUE),
+('79457623M', 'Gorka', 'Ortuzar', 'Endocrino', 'gorka.ortuzar@opendeusto.es', TRUE),
+('16784523R', 'Jacqueline', 'Furelos', 'Cabecera', 'jacqueline.furelos@opendeusto.es', TRUE),
+('30897639H', 'Jorge', 'Martinez', 'Cardiologia', 'jorge.martinez@opendeusto.es', TRUE),
+('30561342T', 'Ander', 'Perez', 'Hematologia', 'ander.martinez@opendeusto.es', TRUE),
+('79542098Q', 'Paula', 'Gonzalez', 'Urgencias', 'paula.gonzalez@opendeusto.es', TRUE),
+('79113006P', 'Ainhoa', 'Saez', 'Traumatologia', 'ainhoa.saez@opendeusto.es', TRUE);
+
 
 INSERT INTO Horario (medico_id, dia, hora_inicio, hora_fin) VALUES
 (1, '2025-03-25', '09:00', '13:00'),
