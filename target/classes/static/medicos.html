@@ -1,198 +1,63 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Médicos - DeustoMedik</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>Gestión de Médicos</h1>
-    </header>
-
-    <main>
-        <section class="form-section">
-            <h2>Añadir / Editar Médico</h2>
-            <form id="medicoForm">
-                <label for="dni">DNI:</label>
-                <input type="text" id="dni" name="dni" required>
-
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-
-                <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" name="apellido" required>
-
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required>
-
-                <label for="especialidad">Especialidad:</label>
-                <input type="text" id="especialidad" name="especialidad" required>
-
-                <label for="contacto">Contacto:</label>
-                <input type="text" id="contacto" name="contacto" required>
-
-                <button type="submit">Guardar Médico</button>
-            </form>
-        </section>
-
-        <section class="list-section">
-            <h2>Lista de Médicos</h2>
-            <table id="tablaMedicos">
-                <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Teléfono</th>
-                        <th>Especialidad</th>
-                        <th>Contacto</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aquí se mostrarán los médicos dinámicamente -->
-                </tbody>
-            </table>
-        </section>
-    </main>
-
-    <script>
-        // Datos simulados para prueba (puedes sustituirlo por llamadas a tu API)
-        const medicos = [
-            { dni: '12345678A', nombre: 'Juan', apellido: 'Pérez', telefono: '600123456', especialidad: 'Cardiología', contacto: 'juan.perez@hospital.com' },
-            { dni: '87654321B', nombre: 'María', apellido: 'López', telefono: '700123456', especialidad: 'Pediatría', contacto: 'maria.lopez@hospital.com' }
-        ];
-
-        function mostrarMedicos() {
-            const tabla = document.querySelector("#tablaMedicos tbody");
-            tabla.innerHTML = "";
-
-            medicos.forEach(medico => {
-                const fila = `
-                    <tr>
-                        <td>${medico.dni}</td>
-                        <td>${medico.nombre}</td>
-                        <td>${medico.apellido}</td>
-                        <td>${medico.telefono}</td>
-                        <td>${medico.especialidad}</td>
-                        <td>${medico.contacto}</td>
-                        <td>
-                            <button onclick="editarMedico('${medico.dni}')">Editar</button>
-                            <button onclick="eliminarMedico('${medico.dni}')">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-                tabla.innerHTML += fila;
-            });
-        }
-
-        function editarMedico(dni) {
-            const medico = medicos.find(m => m.dni === dni);
-            if (medico) {
-                document.getElementById("dni").value = medico.dni;
-                document.getElementById("nombre").value = medico.nombre;
-                document.getElementById("apellido").value = medico.apellido;
-                document.getElementById("telefono").value = medico.telefono;
-                document.getElementById("especialidad").value = medico.especialidad;
-                document.getElementById("contacto").value = medico.contacto;
-            }
-        }
-
-        function eliminarMedico(dni) {
-            const index = medicos.findIndex(m => m.dni === dni);
-            if (index !== -1) {
-                medicos.splice(index, 1);
-                mostrarMedicos();
-            }
-        }
-
-        document.getElementById("medicoForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            const nuevoMedico = {
-                dni: document.getElementById("dni").value,
-                nombre: document.getElementById("nombre").value,
-                apellido: document.getElementById("apellido").value,
-                telefono: document.getElementById("telefono").value,
-                especialidad: document.getElementById("especialidad").value,
-                contacto: document.getElementById("contacto").value
-            };
-
-            const index = medicos.findIndex(m => m.dni === nuevoMedico.dni);
-            if (index !== -1) {
-                medicos[index] = nuevoMedico;  // Editar
-            } else {
-                medicos.push(nuevoMedico);  // Añadir nuevo
-            }
-
-            mostrarMedicos();
-            this.reset();
-        });
-
-        window.onload = mostrarMedicos;
-    </script>
-
+    <title>Medicos DeustoMedik</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        header {
-            background-color: #0a74da;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         }
-
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
+        .card-title {
+            color: #007bff;
+            font-weight: bold;
         }
-
-        .form-section, .list-section {
-            width: 100%;
-            max-width: 800px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #0a74da;
-            color: white;
-        }
-
-        button {
-            background-color: #0a74da;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #074a94;
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
     </style>
-</body>
-</html>
+</head>
+
+
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-5">Medicos DeustMedik</h1>
+
+        <!-- Mensaje cuando no hay retos -->
+        <div th:if="${#lists.isEmpty(retos)}" class="alert alert-info text-center">
+            <i class="fas fa-info-circle fa-2x mb-3"></i>
+            <p class="lead">No hay medicos disponibles en este momento.</p>
+        </div>
+
+        <!-- Lista de medicos -->
+        <div th:unless="${#lists.isEmpty(retos)}" class="row row-cols-1 row-cols-md-3 g-4">
+            <div th:each="reto : ${retos}" class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${reto.nombre}">Nombre del Medico</h5>
+                        <p class="card-text">
+                            <i class="fas fa-running me-2"></i>
+                            <strong>Especialidad:</strong> 
+                            <span th:text="${reto.deporte}">Especialidad</span>
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+							<a th:href="@{/reto/{id}/detalles(id=${reto.id})}" class="btn btn-primary btn-sm">
+							    <i class="fas fa-eye me-2"></i>Ver Horario
+                            </a>
+                            <small class="text-muted" th:text="${reto.id}">Contacto</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
