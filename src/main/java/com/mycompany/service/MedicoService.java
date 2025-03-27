@@ -20,9 +20,17 @@ public class MedicoService {
     private RepositorioHorario repositorioHorario;
 
     public List<Medico> obtenerTodos() {
-        return repositorioMedico.findAll();
-    }
+   
+            List<Medico> medicos = repositorioMedico.findAll();
+            if (medicos.isEmpty()) {
+                System.err.println("No hay médicos disponibles en este momento.");
+                return medicos;
+            } else {
+                System.out.println("Se han encontrado " + medicos.size() + " médicos.");
+                return medicos;
 
+            }
+    }
     public Optional<Medico> obtenerPorId(Long id) {
         return repositorioMedico.findById(id);
     }
