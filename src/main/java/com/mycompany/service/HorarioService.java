@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class HorarioService {
 
     @Autowired
     private RepositorioHorario repositorioHorario;
+    private MedicoService medicoService;
 
     public Horario guardarHorario(Horario horario) {
         if (horario.getHoraInicio().isAfter(horario.getHoraFin())) {
@@ -30,8 +33,12 @@ public class HorarioService {
         return repositorioHorario.save(horario);
     }
     
-    public List<Horario> obtenerHorariosPorMedico(Medico medico) {
-        return repositorioHorario.findByMedico(medico);
+    public List<Horario> obtenerHorariosPorMedico(Long medicoID) {
+        Optional<Medico> medico1 = medicoService.obtenerPorId(medicoID);
+        Medico medico = medico1.get();
+        repositorioHorario.findHorarioMedico(medico);
+        List<Horario> horarios = medicoService.obtenerHorariosPorMedico(medico);
+        return horarios;
     }
 
     public List<Horario> obtenerHorariosPorFecha(LocalDate dia) {

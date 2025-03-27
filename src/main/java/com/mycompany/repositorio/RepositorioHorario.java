@@ -14,5 +14,7 @@ public interface RepositorioHorario extends JpaRepository<Horario, Long> {
 
     List<Horario> findByMedicoAndDia(Medico medico, LocalDate dia);
 
+    List<Horario> findHorarioMedico(Medico medico);
+
     void deleteByMedico(Medico medico);
 }

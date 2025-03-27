@@ -72,11 +72,11 @@ public class MedicoService {
     }
 
     public List<Horario> obtenerHorariosPorMedico(Long medicoId) {
-        Medico medico = repositorioMedico.findById(medicoId)
+        Medico medico = medicoService.obtenerPorId(medicoId)
                 .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
-
         return repositorioHorario.findByMedico(medico);
     }
+    
 
    
 }

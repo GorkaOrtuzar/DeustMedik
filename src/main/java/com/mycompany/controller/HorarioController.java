@@ -46,9 +46,7 @@ public class HorarioController {
     })
     @GetMapping("/medico/{medicoId}")
     public ResponseEntity<List<Horario>> obtenerHorariosPorMedico(@PathVariable Long medicoId) {
-        Medico medico = medicoService.obtenerPorId(medicoId)
-                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
-        List<Horario> horarios = horarioService.obtenerHorariosPorMedico(medico);
+        List<Horario> horarios = horarioService.obtenerHorariosPorMedico(medicoId);
         return ResponseEntity.ok(horarios);
     }
 
