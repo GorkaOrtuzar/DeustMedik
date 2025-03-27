@@ -1,3 +1,4 @@
+DROP DATABASE deustmedik;
 
 CREATE DATABASE deustmedik;
 DROP USER 'deustuser'@'localhost';
@@ -44,7 +45,7 @@ CREATE TABLE Cita (
 CREATE TABLE Horario (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     medico_id BIGINT NOT NULL,
-    dia DATE NOT NULL,
+    dia varchar(30) NOT NULL,
     hora_inicio TIME NOT NULL,
     hora_fin TIME NOT NULL,
     FOREIGN KEY (medico_id) REFERENCES Medico(id) ON DELETE CASCADE
@@ -75,11 +76,17 @@ INSERT INTO Medico (DNI, Nombre, Apellido, Especialidad, Contacto, Disponibilida
 
 
 INSERT INTO Horario (medico_id, dia, hora_inicio, hora_fin) VALUES
-(1, '2025-03-25', '09:00', '13:00'),
-(2, '2025-03-26', '10:00', '14:00'),
-(3, '2025-03-27', '08:00', '12:00'),
-(4, '2025-03-28', '11:00', '15:00'),
-(5, '2025-03-29', '12:00', '16:00');
+(1, 'LUNES', '09:00', '13:00'),
+(1, 'MARTES', '09:00', '13:00'),
+(1, 'JUEVES', '09:00', '13:00'),
+(1, 'LUNES', '09:00', '13:00'),
+(2, 'MARTES', '10:00', '14:00'),
+(2, 'JUEVES', '10:00', '14:00'),
+(3, 'LUNES', '08:00', '12:00'),
+(3, 'MIERCOLES', '08:00', '12:00'),
+(3, 'VIERNES', '08:00', '12:00'),
+(4, 'JUEVES', '11:00', '15:00'),
+(5, 'VIERNES', '12:00', '16:00');
 
 INSERT INTO Paciente (DNI, Nombre, Apellido, Correo, Contraseña, Historial, medico_id) VALUES
 ('12345678A', 'Carlos', 'Lopez', 'carlos.lopez@pacientes.com', 'pass1234', 'Paciente con antecedentes de hipertensión.', 1),

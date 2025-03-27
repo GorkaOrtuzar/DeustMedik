@@ -1,7 +1,6 @@
 package com.mycompany.modelo;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -18,7 +17,7 @@ public class Horario {
     private Long id;
 
     @Column(name = "dia")
-    private LocalDate dia;
+    private String dia;
 
     @Column(name = "hora_inicio")
     private LocalTime horaInicio;
@@ -32,7 +31,7 @@ public class Horario {
 
     public Horario() {}
 
-    public Horario(LocalDate dia, LocalTime horaInicio, LocalTime horaFin, Medico medico) {
+    public Horario(String dia, LocalTime horaInicio, LocalTime horaFin, Medico medico) {
         this.dia = dia;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
@@ -43,11 +42,11 @@ public class Horario {
         return id;
     }
 
-    public LocalDate getDia() {
+    public String getDia() {
         return dia;
     }
 
-    public void setDia(LocalDate dia) {
+    public void setDia(String dia) {
         this.dia = dia;
     }
 
