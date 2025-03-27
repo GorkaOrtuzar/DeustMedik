@@ -49,4 +49,17 @@ public class HorarioService {
     public void eliminarHorariosPorMedico(Medico medico) {
         repositorioHorario.deleteByMedico(medico);
     }
+
+    public Horario actualizarHorario(Long id, Horario nuevoHorario) {
+        Horario horarioExistente = repositorioHorario.findById(id)
+                .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+        if (nuevoHorario.getHoraInicio().isAfter(nuevoHorario.getHoraFin())) {
+            throw new IllegalArgumentException("La hora de inicio no puede ser mayor que la hora de fin.");
+        }
+        horarioExistente.setDia(nuevoHorario.getDia());
+        horarioExistente.setHoraInicio(nuevoHorario.getHoraInicio());
+        horarioExistente.setHoraFin(nuevoHorario.getHoraFin());
+        return repositorioHorario.save(horarioExistente);
+    }
+    
 }
