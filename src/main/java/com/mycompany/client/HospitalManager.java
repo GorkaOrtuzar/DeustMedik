@@ -1,5 +1,6 @@
 package com.mycompany.client;
 
+import com.mycompany.modelo.Horario;
 import com.mycompany.modelo.Medico;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,28 @@ public class HospitalManager {
         model.addAttribute("medicos", medicos);
         return "medicos";
     }
+
+    //@GetMapping("/horarios")
+    //public String mostrarHorarios() {
+    //    return "horarios";
+    //}
+
+    @GetMapping("/horarios")
+    public String mostrarHorarios(Model model) {
+        String url = "http://localhost:8080/medicos/medico/Horario?Nombre=Laura";
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            Horario[] horarios = restTemplate.getForObject(url, Horario[].class);
+            model.addAttribute("horarios", List.of(horarios));
+        } catch (Exception e) {
+            System.out.println("Error al obtener los horarios: " + e.getMessage());
+            model.addAttribute("horarios", List.of());
+        }
+
+        return "horarios";
+    }
+
 
     private List<Medico> getMedicosFromAPI() {
         try {
