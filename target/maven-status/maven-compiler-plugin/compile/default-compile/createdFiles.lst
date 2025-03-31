@@ -4,6 +4,7 @@ com\mycompany\modelo\Cita.class
 com\mycompany\service\RestApiApplication.class
 com\mycompany\client\HospitalManager.class
 com\mycompany\repositorio\RepositorioMedico.class
+com\mycompany\controller\CitaController.class
 com\mycompany\repositorio\RepositorioHorario.class
 com\mycompany\modelo\Paciente.class
 com\mycompany\controller\HorarioController.class
@@ -11,4 +12,5 @@ com\mycompany\modelo\Horario.class
 com\mycompany\repositorio\RepositorioCita.class
 com\mycompany\service\HorarioService.class
 com\mycompany\repositorio\RepositorioPaciente.class
+com\mycompany\controller\ApiResponse.class
 com\mycompany\modelo\Medico.class
