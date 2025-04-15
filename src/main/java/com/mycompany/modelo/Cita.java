@@ -13,12 +13,13 @@ public class Cita {
     @ManyToOne
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
-
+    @Column(name = "DNI")
+    private String pacienteDNI;
     @Column(name = "Paciente")
     private String pacienteNombre;
     @Column(name = "Apellido")
     private String pacienteApellido;
-    @Column(name = "Feche")
+    @Column(name = "Fecha")
     private LocalDateTime fechaHora;
     @Column(name = "Motivo de Visita")
     private String motivo;
@@ -26,8 +27,9 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(Medico medico, String pacienteNombre, String pacienteApellido, LocalDateTime fechaHora, String motivo) {
+    public Cita(Medico medico,String pacienteDNI ,String pacienteNombre, String pacienteApellido, LocalDateTime fechaHora, String motivo) {
         this.medico = medico;
+        this.pacienteDNI = pacienteDNI;
         this.pacienteNombre = pacienteNombre;
         this.pacienteApellido = pacienteApellido;
         this.fechaHora = fechaHora;
@@ -49,7 +51,12 @@ public class Cita {
     public void setMedico(Medico medico) {
         this.medico = medico;
     }
-
+    public String getPacienteDNI() {
+        return pacienteDNI;
+    }
+    public void setPacienteDNI(String pacienteDNI) {
+        this.pacienteDNI = pacienteDNI;
+    }
     public String getPacienteNombre() {
         return pacienteNombre;
     }
@@ -81,4 +88,5 @@ public class Cita {
     public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
+    
 }

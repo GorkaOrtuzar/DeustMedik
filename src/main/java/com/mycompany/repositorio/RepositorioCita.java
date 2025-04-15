@@ -2,6 +2,7 @@ package com.mycompany.repositorio;
 
 import com.mycompany.modelo.Cita;
 import com.mycompany.modelo.Medico;
+import com.mycompany.modelo.Paciente;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,5 @@ public interface RepositorioCita extends JpaRepository<Cita, Long> {
 
     @Query("SELECT c.medico FROM Cita c WHERE c.fechaHora = :fechaHora")
     List<Medico> findMedicosConCitaEnFecha(@Param("fechaHora") LocalDateTime fechaHora);
-
+    List<Cita> findByPacienteDNIOrderByFechaHoraDesc(String pacienteDNI);
 }
