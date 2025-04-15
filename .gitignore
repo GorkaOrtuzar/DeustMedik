@@ -34,3 +34,6 @@ buildNumber.properties
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+#Archivos con extensión .list
+*.lst
