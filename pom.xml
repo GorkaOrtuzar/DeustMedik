@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
-         <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.myHospital.app</groupId>
   <artifactId>DeustMedik</artifactId>
@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
-    <spring-boot.version>3.2.0</spring-boot.version> <!-- ✅ Añadido para gestionar versiones -->
+    <spring-boot.version>3.2.0</spring-boot.version>
   </properties>
 
   <dependencies>
@@ -24,7 +24,7 @@
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
-      
+    
     <!-- Dependencia para MySQL -->
     <dependency>
       <groupId>mysql</groupId>
@@ -61,7 +61,7 @@
       <version>3.36.0.3</version>
     </dependency>
 
-    <!-- Dependencia para manejo de pruebas (con versión corregida) -->
+    <!-- Dependencia para manejo de pruebas -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -79,9 +79,14 @@
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       <version>2.2.0</version>
-      </dependency>
+    </dependency>
 
-  
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>4.6.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -93,12 +98,34 @@
         <version>3.10.1</version>
       </plugin>
 
-      <!-- Plugin para ejecutar la aplicación Spring Boot (con versión añadida) -->
+      <!-- Plugin para ejecutar la aplicación Spring Boot -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version> <!-- ✅ Versión añadida -->
+        <version>${spring-boot.version}</version>
       </plugin>
+
+      <!--Plugin JaCoCo añadido -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.8</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
 
     <resources>
