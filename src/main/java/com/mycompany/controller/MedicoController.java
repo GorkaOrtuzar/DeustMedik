@@ -6,14 +6,24 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import com.mycompany.DTO.CredencialesDTO;
+import com.mycompany.DTO.CredencialesMedicoDTO;
 import com.mycompany.modelo.Medico;
 import com.mycompany.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -60,4 +70,49 @@ public class MedicoController {
         
         return ResponseEntity.ok(medicos);
     }
+
+    @Operation(
+        summary = "Obtener disponibilidad de un médico", 
+        description = "Recupera los horarios disponibles de un médico para una fecha específica",
+        responses = {
+            @ApiResponse(
+                responseCode = "200", 
+                description = "Horarios disponibles obtenidos exitosamente",
+                content = @Content(
+                    mediaType = "application/json", 
+                    schema = @Schema(implementation = LocalDateTime.class)
+                )
+            ),
+            @ApiResponse(
+                responseCode = "200", 
+                description = "No hay horarios disponibles para el médico en la fecha especificada"
+            ),
+            @ApiResponse(
+                responseCode = "400", 
+                description = "Médico no encontrado"
+            ),
+            @ApiResponse(
+                responseCode = "500", 
+                description = "Error interno del servidor"
+            )
+        }
+    )
+    @PostMapping("/medico/disponibilidad")
+    public ResponseEntity<List<LocalDateTime>> obtenerDisponibilidadMedico(
+        @RequestBody CredencialesMedicoDTO credentials){
+    
+        Medico medico = servicioMedico.buscarPorNombreYApellido(credentials.getNombre(),credentials.getApelliddo());
+
+        
+        List<LocalDateTime> disponibilidad = servicioMedico.obtenerDisponibilidadMedico(medico.getId());
+        
+        if (disponibilidad.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        
+        return new ResponseEntity<>(disponibilidad, HttpStatus.OK);
+    }
+
+
+
 }

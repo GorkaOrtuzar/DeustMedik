@@ -1,16 +1,20 @@
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\controller\CitaController.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\service\HorarioService.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\modelo\Medico.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioPaciente.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\modelo\Paciente.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioMedico.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\controller\MedicoController.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\client\HospitalManager.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\service\MedicoService.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioCita.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\controller\HorarioController.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\controller\ApiResponse.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\modelo\Cita.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioHorario.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\service\RestApiApplication.java
-C:\Users\jmart\OneDrive\Escritorio\Proceso de Soft\DeustMedik\src\main\java\com\mycompany\modelo\Horario.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\controller\HorarioController.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\service\HorarioService.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\DTO\CredencialesMedicoDTO.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioPaciente.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioHorario.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioMedico.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\controller\PacienteController.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\service\RestApiApplication.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\modelo\Medico.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\modelo\Paciente.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\cliente\HospitalManager.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\service\PacienteService.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\DTO\CredencialesDTO.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\service\MedicoService.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\repositorio\RepositorioCita.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\controller\ApiResponse.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\modelo\Cita.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\controller\CitaController.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\controller\MedicoController.java
+C:\Users\gorka\Desktop\UNI\ProyectoProcesoSofware\DeustMedik\src\main\java\com\mycompany\modelo\Horario.java
