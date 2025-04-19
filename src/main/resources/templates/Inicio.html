@@ -3,314 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeustMedik - Portal del Paciente</title>
+    <title>Inicio - Sistema Médico</title>
     <style>
-        * {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
         }
         
-        body {
-            background-color: #f5f5f5;
-        }
-        
-        .status-bar {
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            background-color: #fff;
-        }
-        
-        .status-bar-left {
-            display: flex;
             align-items: center;
         }
         
-        .status-bar-right {
-            display: flex;
-            align-items: center;
-        }
-        
-        .header {
-            text-align: center;
-            padding: 15px;
-            background-color: #fff;
-        }
-        
-        .logo {
-            width: 180px;
-            margin: 0 auto;
-        }
-        
-        .user-greeting {
-            padding: 20px;
-            font-size: 24px;
-            color: #005ba1;
+        .navbar-brand {
+            font-size: 1.5rem;
             font-weight: bold;
         }
         
-        .profile-icon {
-            float: right;
-            margin-right: 20px;
-        }
-        
-        .help-icon {
-            float: left;
-            margin-left: 20px;
-        }
-        
-        .section-title {
-            padding: 20px;
-            font-size: 22px;
-            color: #4a2d80;
-        }
-        
-        .appointment-card {
-            background-color: #fff;
-            border-radius: 10px;
-            margin: 10px 20px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .appointment-header {
-            background-color: #7bacd1;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .appointment-body {
-            padding: 20px;
-        }
-        
-        .specialty {
-            color: #4a2d80;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .doctor {
-            color: #4a2d80;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        
-        .details {
+        .user-info {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            color: #4a2d80;
         }
         
-        .details-icon {
-            margin-right: 10px;
-            width: 20px;
+        .user-name {
+            margin-right: 1rem;
         }
         
-        .request-button {
-            display: block;
-            background-color: #005ba1;
+        .logout-btn {
+            background-color: transparent;
+            border: 1px solid white;
             color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: white;
+            color: #2c3e50;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .welcome-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .welcome-section h1 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .actions-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .action-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            padding: 15px;
-            border-radius: 30px;
-            margin: 20px;
-            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+        
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-description {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+        }
+        
+        .action-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
             text-decoration: none;
         }
         
-        .doctor-card {
-            background-color: #fff;
-            border-radius: 10px;
-            margin: 10px 20px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            padding: 15px;
-            align-items: center;
+        .action-button:hover {
+            background-color: #2980b9;
         }
         
-        .doctor-type {
-            background-color: #7bacd1;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            position: absolute;
-            margin-top: -35px;
-            margin-left: 15px;
+        .history-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         
-        .doctor-icon {
-            color: #4a2d80;
-            font-size: 35px;
-            margin-right: 15px;
+        .history-section h2 {
+            color: #2c3e50;
+            margin-top: 0;
         }
         
-        .doctor-info {
-            flex-grow: 1;
-        }
-        
-        .doctor-name {
-            color: #4a2d80;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
-        .doctor-specialty {
-            color: #4a2d80;
-            font-size: 14px;
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 20px;
-        }
-        
-        .find-doctor {
-            color: #005ba1;
-            text-decoration: none;
-        }
-        
-        .pagination {
-            text-align: center;
-            margin: 15px 0;
-        }
-        
-        .pagination-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #005ba1;
-            border-radius: 50%;
-            margin: 0 5px;
-        }
-        
-        .nav-bar {
-            display: flex;
-            background-color: #fff;
-            position: fixed;
-            bottom: 0;
+        table {
             width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
         }
         
-        .nav-item {
-            flex: 1;
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        .empty-state {
             text-align: center;
-            padding: 10px;
-            color: #4a2d80;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        
-        .nav-active {
-            background-color: #005ba1;
-            color: white;
-        }
-        
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        
-        .badge {
-            background-color: #f44336;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 10px;
-            position: absolute;
-            margin-left: 15px;
-            margin-top: -10px;
-        }
-        
-        .chat-button {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: #26c6da;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 30px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            padding: 2rem;
+            color: #a0aec0;
         }
     </style>
 </head>
 <body>
-
+    <nav class="navbar">
+        <div class="navbar-brand">Sistema Médico</div>
+        <div class="user-info">
+            <span class="user-name" id="user-name">Cargando...</span>
+            <button class="logout-btn" id="logout-btn">Cerrar Sesión</button>
+        </div>
+    </nav>
     
-<!-- Cabecera con logo -->
-    <div class="header">
-        <div class="help-icon">❓</div>
-        <img src="/api/placeholder/180/60" alt="DeustMedik Logo" class="logo">
-        <div class="profile-icon">👤</div>
+    <div class="container">
+        <section class="welcome-section">
+            <h1>Bienvenido/a</h1>
+            <p>Selecciona una de las siguientes opciones para comenzar:</p>
+        </section>
+        
+        <section class="actions-section">
+            <div class="action-card">
+                <div class="action-icon">👨‍⚕️</div>
+                <h3 class="action-title">Buscar Médicos</h3>
+                <p class="action-description">Encuentra médicos disponibles por especialidad o nombre.</p>
+                <a href="buscar-medicos.html" class="action-button">Buscar Médicos</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">📅</div>
+                <h3 class="action-title">Pedir Cita</h3>
+                <p class="action-description">Solicita una nueva cita médica con tu especialista preferido.</p>
+                <a href="pedir-cita.html" class="action-button">Pedir Cita</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">📋</div>
+                <h3 class="action-title">Mi Historial</h3>
+                <p class="action-description">Consulta tu historial de citas médicas y resultados.</p>
+                <a href="historial.html" class="action-button">Ver Historial</a>
+            </div>
+        </section>
+        
+        <section class="history-section">
+            <h2>Tus Próximas Citas</h2>
+            <div id="proximas-citas-container">
+                <div class="empty-state">Cargando tus próximas citas...</div>
+            </div>
+        </section>
     </div>
     
-    <!-- Saludo -->
-    <div class="user-greeting">
-        ¡Hola, Gorka!
-    </div>
-    
-    <!-- Sección de citas -->
-    <div class="section-title">
-        Próximas citas (1)
-    </div>
-    
-    <!-- Tarjeta de cita -->
-    
-   
-    
-    <a href="#" class="request-button">Pedir cita</a>
-    
-    <!-- Sección de médicos -->
-    <div class="section-header">
-        <div class="section-title">Tus médicos (1)</div>
-        <a href="/medicos" class="find-doctor">+ Buscar médico</a>
-        <a href="/horarios">Ver horarios</a>
-    </div>
-    
-   <!-- Medico personal -->
-    
-   
-    
-    <!-- Botón de chat -->
-    <div class="chat-button">👨‍⚕️</div>
-    
-    <!-- Barra de navegación -->
-    <div class="nav-bar">
-        <a href="#" class="nav-item nav-active">
-            <div class="nav-icon">🏠</div>
-            <div>Inicio</div>
-        </a>
-        <a href="#" class="nav-item">
-            <div class="nav-icon">📄</div>
-            <div>Trámites</div>
-        </a>
-        <a href="#" class="nav-item">
-            <div class="nav-icon">📅</div>
-            <div class="badge">1</div>
-            <div>Mis citas</div>
-        </a>
-        <a href="#" class="nav-item">
-            <div class="nav-icon">🔗</div>
-            <div>Mi salud</div>
-        </a>
-        <a href="#" class="nav-item">
-            <div class="nav-icon">➕</div>
-            <div>Telemedicina</div>
-        </a>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si el usuario está autenticado
+            const userToken = localStorage.getItem('userToken');
+            const userDni = localStorage.getItem('userDni');
+            
+            if (!userToken || !userDni) {
+                // Redirigir al login si no hay token o DNI
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Configurar el nombre de usuario (podríamos obtenerlo de la API)
+            document.getElementById('user-name').textContent = `Usuario: ${userDni}`;
+            
+            // Manejar el cierre de sesión
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('userDni');
+                window.location.href = 'login.html';
+            });
+            
+            // Cargar las próximas citas del paciente
+            cargarProximasCitas();
+        });
+        
+        async function cargarProximasCitas() {
+            const userDni = localStorage.getItem('userDni');
+            const container = document.getElementById('proximas-citas-container');
+            
+            try {
+                const response = await fetch(`/autorizacion/citas/historial/${userDni}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const citas = await response.json();
+                    
+                    if (citas && citas.length > 0) {
+                        // Filtrar solo citas futuras y ordenar por fecha
+                        const citasFuturas = citas
+                            .filter(cita => new Date(cita.fechaHora) > new Date())
+                            .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora))
+                            .slice(0, 5); // Mostrar solo las próximas 5 citas
+                        
+                        if (citasFuturas.length > 0) {
+                            // Crear tabla HTML
+                            let tableHTML = `
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Médico</th>
+                                            <th>Especialidad</th>
+                                            <th>Motivo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                            `;
+                            
+                            citasFuturas.forEach(cita => {
+                                const fecha = new Date(cita.fechaHora);
+                                tableHTML += `
+                                    <tr>
+                                        <td>${fecha.toLocaleDateString()}</td>
+                                        <td>${fecha.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+                                        <td>${cita.medico.nombre} ${cita.medico.apellido}</td>
+                                        <td>${cita.medico.especialidad}</td>
+                                        <td>${cita.motivo}</td>
+                                    </tr>
+                                `;
+                            });
+                            
+                            tableHTML += `
+                                    </tbody>
+                                </table>
+                            `;
+                            
+                            container.innerHTML = tableHTML;
+                        } else {
+                            container.innerHTML = '<div class="empty-state">No tienes citas programadas próximamente.</div>';
+                        }
+                    } else {
+                        container.innerHTML = '<div class="empty-state">No tienes citas programadas próximamente.</div>';
+                    }
+                } else {
+                    container.innerHTML = '<div class="empty-state">No se pudieron cargar tus citas.</div>';
+                }
+            } catch (error) {
+                console.error('Error al cargar las citas:', error);
+                container.innerHTML = '<div class="empty-state">Error al conectar con el servidor.</div>';
+            }
+        }
+    </script>
 </body>
 </html>
