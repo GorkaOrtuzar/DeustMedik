@@ -25,4 +25,13 @@ public class HorarioService {
         Medico medico = medicoOptional.get();  // Obtiene el objeto Medico completo
         return repositorioHorario.findByMedico(medico);  // Busca los horarios usando el objeto Medico completo
     }
+
+    public List<Horario> obtenerHorariosPorMedico(Long id) {
+        Optional<Medico> medicoOptional = repositorioMedico.findById(id);
+        if (medicoOptional.isEmpty()) {
+            return List.of();
+        }
+        Medico medico = medicoOptional.get();
+        return repositorioHorario.findByMedico(medico);
+    }
 }

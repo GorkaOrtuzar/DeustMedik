@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import com.mycompany.modelo.Horario;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +20,12 @@ import java.util.List;
 @RequestMapping("/medicos")
 public class HorarioController {
 
-    private HorarioService horarioService;
+private HorarioService horarioService;
     
+@Autowired
+public HorarioController(HorarioService horarioService) {
+    this.horarioService = horarioService;
+}
 
 
 @Operation(
@@ -44,10 +50,23 @@ public class HorarioController {
             )
         }
     )
-    @GetMapping("/medico/Horario/")
-    public List<Horario> obtenerHorariosPorMedico(
-    @Parameter(description = "Nombre del médico a buscar") @RequestParam("Nombre") String nombre) {
-        List<Horario> horarios = horarioService.obtenerHorarioMedico(nombre);  // Obtiene el objeto Medico completo
-        return horarios;  // Llamar al servicio con el nombre del médico
+
+    @GetMapping("/medico/Horario")
+    public ResponseEntity<List<Horario>> obtenerHorariosPorMedico(@RequestParam("id") Long id) {
+        List<Horario> horarios = horarioService.obtenerHorariosPorMedico(id);
+        return ResponseEntity.ok(horarios);
     }
+
+    //@GetMapping("/medico/Horario/")
+    //public List<Horario> obtenerHorariosPorMedico(
+    //@Parameter(description = "Nombre del médico a buscar") @RequestParam("Nombre") String nombre) {
+        //List<Horario> horarios = horarioService.obtenerHorarioMedico(nombre);  // Obtiene el objeto Medico completo
+        //return horarios;  // Llamar al servicio con el nombre del médico
+    //}
+
+    @GetMapping("/horarios")
+    public String mostrarHorarios() {
+        return "horarios";
+    }
+
 }

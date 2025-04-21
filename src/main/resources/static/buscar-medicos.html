@@ -517,9 +517,7 @@
                             <a href="pedir-cita.html?medico=${medico.id}" class="doctor-button primary-button">
                                 Pedir Cita
                             </a>
-                            <button class="doctor-button secondary-button" onclick="verHorariosMedico('${medico.nombre}')">
-                                Ver Horarios
-                            </button>
+                            <a href="/horarios?nombre=${medico.nombre}" class="doctor-button secondary-button">Ver Horarios</a>
                         </div>
                     </div>
                 `;
@@ -527,7 +525,7 @@
                 doctorsGrid.appendChild(doctorCard);
             });
         }
-        
+    
         function mostrarMensajeVacio(mensaje) {
             const doctorsGrid = document.getElementById('doctors-grid');
             const resultsCount = document.getElementById('results-count');
