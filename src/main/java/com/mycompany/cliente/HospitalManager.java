@@ -24,9 +24,9 @@ public class HospitalManager {
         this.restTemplate = new RestTemplate();
     }
 
-    @GetMapping("/")
-    public String inicio() {
-        return "inicio"; // para que funcione Inicio.html
+    @GetMapping("/inicio")
+    public String mostrarInicio() {
+        return "inicio"; // Busca el archivo inicio.html en /templates
     }
 
     @GetMapping("/medicos")

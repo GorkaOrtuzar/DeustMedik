@@ -79,7 +79,7 @@
         }
     </style>
 </head>
-<body>
+<body> 
     <div class="login-container">
         <div class="header">
             <h1>Sistema Médico</h1>
@@ -139,7 +139,8 @@
                         localStorage.setItem('userDni', dniInput.value);
                         
                         // Redirigir a la página de inicio
-                        window.location.href = 'inicio.html';
+                        window.location.href = '/inicio';
+                        //window.location.href = 'inicio.html';
                     } else {
                         // Login fallido
                         showError('DNI o contraseña incorrectos');
