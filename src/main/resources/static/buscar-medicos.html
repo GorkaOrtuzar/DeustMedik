@@ -328,7 +328,7 @@
             
             if (!userToken || !userDni) {
                 // Redirigir al login si no hay token o DNI
-                window.location.href = 'login.html';
+                window.location.href = '/login';
                 return;
             }
             
@@ -339,7 +339,7 @@
             document.getElementById('logout-btn').addEventListener('click', function() {
                 localStorage.removeItem('userToken');
                 localStorage.removeItem('userDni');
-                window.location.href = 'login.html';
+                window.location.href = '/login';
             });
             
             // Cargar todos los médicos al iniciar
@@ -553,3 +553,6 @@
                     console.error('Error al obtener horarios:', error);
                 });
         }
+    </script>
+</body>
+</html>
