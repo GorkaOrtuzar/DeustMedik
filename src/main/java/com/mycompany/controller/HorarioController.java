@@ -44,10 +44,10 @@ public class HorarioController {
             )
         }
     )
-@GetMapping("/medico/Horario/")
-public List<Horario> obtenerHorariosPorMedico(
- @Parameter(description = "Nombre del médico a buscar") @RequestParam("Nombre") String nombre) {
-List<Horario> horarios = horarioService.obtenerHorarioMedico(nombre);  // Obtiene el objeto Medico completo
-return horarios;  // Llamar al servicio con el nombre del médico
-}
+    @GetMapping("/medico/Horario/")
+    public List<Horario> obtenerHorariosPorMedico(
+    @Parameter(description = "Nombre del médico a buscar") @RequestParam("Nombre") String nombre) {
+        List<Horario> horarios = horarioService.obtenerHorarioMedico(nombre);  // Obtiene el objeto Medico completo
+        return horarios;  // Llamar al servicio con el nombre del médico
+    }
 }

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeustMedik - Portal del Paciente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #fff;
+        }
+        
+        .status-bar-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-bar-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 15px;
+            background-color: #fff;
+        }
+        
+        .logo {
+            width: 180px;
+            margin: 0 auto;
+        }
+        
+        .user-greeting {
+            padding: 20px;
+            font-size: 24px;
+            color: #005ba1;
+            font-weight: bold;
+        }
+        
+        .profile-icon {
+            float: right;
+            margin-right: 20px;
+        }
+        
+        .help-icon {
+            float: left;
+            margin-left: 20px;
+        }
+        
+        .section-title {
+            padding: 20px;
+            font-size: 22px;
+            color: #4a2d80;
+        }
+        
+        .appointment-card {
+            background-color: #fff;
+            border-radius: 10px;
+            margin: 10px 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .appointment-header {
+            background-color: #7bacd1;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .appointment-body {
+            padding: 20px;
+        }
+        
+        .specialty {
+            color: #4a2d80;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .doctor {
+            color: #4a2d80;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .details {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #4a2d80;
+        }
+        
+        .details-icon {
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .request-button {
+            display: block;
+            background-color: #005ba1;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 30px;
+            margin: 20px;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        
+        .doctor-card {
+            background-color: #fff;
+            border-radius: 10px;
+            margin: 10px 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            padding: 15px;
+            align-items: center;
+        }
+        
+        .doctor-type {
+            background-color: #7bacd1;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            position: absolute;
+            margin-top: -35px;
+            margin-left: 15px;
+        }
+        
+        .doctor-icon {
+            color: #4a2d80;
+            font-size: 35px;
+            margin-right: 15px;
+        }
+        
+        .doctor-info {
+            flex-grow: 1;
+        }
+        
+        .doctor-name {
+            color: #4a2d80;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .doctor-specialty {
+            color: #4a2d80;
+            font-size: 14px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 20px;
+        }
+        
+        .find-doctor {
+            color: #005ba1;
+            text-decoration: none;
+        }
+        
+        .pagination {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .pagination-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #005ba1;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        
+        .nav-bar {
+            display: flex;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            color: #4a2d80;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .nav-active {
+            background-color: #005ba1;
+            color: white;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .badge {
+            background-color: #f44336;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            position: absolute;
+            margin-left: 15px;
+            margin-top: -10px;
+        }
+        
+        .chat-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #26c6da;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    
+<!-- Cabecera con logo -->
+    <div class="header">
+        <div class="help-icon">❓</div>
+        <img src="/api/placeholder/180/60" alt="DeustMedik Logo" class="logo">
+        <div class="profile-icon">👤</div>
+    </div>
+    
+    <!-- Saludo -->
+    <div class="user-greeting">
+        ¡Hola, Gorka!
+    </div>
+    
+    <!-- Sección de citas -->
+    <div class="section-title">
+        Próximas citas (1)
+    </div>
+    
+    <!-- Tarjeta de cita -->
+    
+   
+    
+    <a href="#" class="request-button">Pedir cita</a>
+    
+    <!-- Sección de médicos -->
+    <div class="section-header">
+        <div class="section-title">Tus médicos (1)</div>
+        <a href="/medicos" class="find-doctor">+ Buscar médico</a>
+        <a href="/horarios">Ver horarios</a>
+    </div>
+    
+   <!-- Medico personal -->
+    
+   
+    
+    <!-- Botón de chat -->
+    <div class="chat-button">👨‍⚕️</div>
+    
+    <!-- Barra de navegación -->
+    <div class="nav-bar">
+        <a href="#" class="nav-item nav-active">
+            <div class="nav-icon">🏠</div>
+            <div>Inicio</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">📄</div>
+            <div>Trámites</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">📅</div>
+            <div class="badge">1</div>
+            <div>Mis citas</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">🔗</div>
+            <div>Mi salud</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">➕</div>
+            <div>Telemedicina</div>
+        </a>
+    </div>
+</body>
+</html>
