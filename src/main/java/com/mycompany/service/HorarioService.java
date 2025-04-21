@@ -17,6 +17,11 @@ public class HorarioService {
     private  RepositorioHorario repositorioHorario;
     private  RepositorioMedico repositorioMedico;
 
+    public HorarioService(RepositorioHorario repositorioHorario, RepositorioMedico repositorioMedico) {
+        this.repositorioHorario = repositorioHorario;
+        this.repositorioMedico = repositorioMedico;
+    }
+
     public List<Horario> obtenerHorarioMedico(String nombre) {
         Optional<Medico> medicoOptional = repositorioMedico.findByNombre(nombre);
         if (medicoOptional.isEmpty()) {

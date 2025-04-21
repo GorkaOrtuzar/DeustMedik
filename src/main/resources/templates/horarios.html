@@ -85,8 +85,11 @@
     </nav>
 
     <div class="container">
-        <h2>Horario del Médico</h2>
+        <h2>Horario del Médico</h2>      
         <div id="horario-container" class="empty-state">Cargando horarios...</div>
+        <a href="/inicio" class="doctor-button primary-button" style="margin: 1rem 0; display: inline-block;">
+            ← Volver al Inicio
+        </a>  
     </div>
 
     <script>
@@ -109,12 +112,12 @@
             //const nombreMedico = params.get('nombre');
             const medicoId = params.get('medicoId');
 
-            if (!nombreMedico) {
+            if (!medicoId) {
                 document.getElementById('horario-container').textContent = 'No se ha especificado un médico.';
                 return;
             }
 
-            document.getElementById('medico-nombre').textContent = nombreMedico;
+            //document.getElementById('medico-nombre').textContent = nombreMedico;
             //fetch(`/medicos/medico/Horario/?Nombre=${encodeURIComponent(nombreMedico)}`)
             fetch(`/medicos/medico/Horario?id=${medicoId}`)
                 .then(res => res.json())
