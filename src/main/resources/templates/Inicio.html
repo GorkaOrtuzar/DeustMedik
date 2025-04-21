@@ -216,35 +216,41 @@
     </div>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verificar si el usuario está autenticado
+        document.addEventListener('DOMContentLoaded', function () {
             const userToken = localStorage.getItem('userToken');
             const userDni = localStorage.getItem('userDni');
-            
+    
             if (!userToken || !userDni) {
-                // Redirigir al login si no hay token o DNI
                 window.location.href = '/login';
                 return;
             }
-            
-            // Configurar el nombre de usuario (podríamos obtenerlo de la API)
-            document.getElementById('user-name').textContent = `Usuario: ${userDni}`;
-            
-            // Manejar el cierre de sesión
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userDni');
-                window.location.href = 'login';
-            });
-            
-            // Cargar las próximas citas del paciente
+    
+            // Mostrar el DNI como nombre de usuario
+            const userNameElement = document.getElementById('user-name');
+            if (userNameElement) {
+                userNameElement.textContent = `Usuario: ${userDni}`;
+            }
+    
+            // ✅ Asegurarse de que el botón existe antes de añadir el event listener
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function () {
+                    localStorage.removeItem('userToken');
+                    localStorage.removeItem('userDni');
+                    window.location.href = '/login';
+                });
+            } else {
+                console.warn("No se encontró el botón de cerrar sesión");
+            }
+    
+            // Cargar citas futuras
             cargarProximasCitas();
         });
-        
+    
         async function cargarProximasCitas() {
             const userDni = localStorage.getItem('userDni');
             const container = document.getElementById('proximas-citas-container');
-            
+    
             try {
                 const response = await fetch(`/autorizacion/citas/historial/${userDni}`, {
                     method: 'GET',
@@ -252,55 +258,45 @@
                         'Authorization': `Bearer ${localStorage.getItem('userToken')}`
                     }
                 });
-                
+    
                 if (response.ok) {
                     const citas = await response.json();
-                    
-                    if (citas && citas.length > 0) {
-                        // Filtrar solo citas futuras y ordenar por fecha
-                        const citasFuturas = citas
-                            .filter(cita => new Date(cita.fechaHora) > new Date())
-                            .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora))
-                            .slice(0, 5); // Mostrar solo las próximas 5 citas
-                        
-                        if (citasFuturas.length > 0) {
-                            // Crear tabla HTML
-                            let tableHTML = `
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Médico</th>
-                                            <th>Especialidad</th>
-                                            <th>Motivo</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                            `;
-                            
-                            citasFuturas.forEach(cita => {
-                                const fecha = new Date(cita.fechaHora);
-                                tableHTML += `
+    
+                    const citasFuturas = citas
+                        .filter(cita => new Date(cita.fechaHora) > new Date())
+                        .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora))
+                        .slice(0, 5);
+    
+                    if (citasFuturas.length > 0) {
+                        let tableHTML = `
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>${fecha.toLocaleDateString()}</td>
-                                        <td>${fecha.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-                                        <td>${cita.medico.nombre} ${cita.medico.apellido}</td>
-                                        <td>${cita.medico.especialidad}</td>
-                                        <td>${cita.motivo}</td>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Médico</th>
+                                        <th>Especialidad</th>
+                                        <th>Motivo</th>
                                     </tr>
-                                `;
-                            });
-                            
+                                </thead>
+                                <tbody>
+                        `;
+    
+                        citasFuturas.forEach(cita => {
+                            const fecha = new Date(cita.fechaHora);
                             tableHTML += `
-                                    </tbody>
-                                </table>
+                                <tr>
+                                    <td>${fecha.toLocaleDateString()}</td>
+                                    <td>${fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                                    <td>${cita.medico.nombre} ${cita.medico.apellido}</td>
+                                    <td>${cita.medico.especialidad}</td>
+                                    <td>${cita.motivo}</td>
+                                </tr>
                             `;
-                            
-                            container.innerHTML = tableHTML;
-                        } else {
-                            container.innerHTML = '<div class="empty-state">No tienes citas programadas próximamente.</div>';
-                        }
+                        });
+    
+                        tableHTML += `</tbody></table>`;
+                        container.innerHTML = tableHTML;
                     } else {
                         container.innerHTML = '<div class="empty-state">No tienes citas programadas próximamente.</div>';
                     }
@@ -313,5 +309,6 @@
             }
         }
     </script>
+    
 </body>
 </html>
