@@ -137,8 +137,31 @@
     </main>
 
     <script>
-        // Cargar médicos en el selector
-        window.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Verificar si el usuario está autenticado
+            const userToken = localStorage.getItem('userToken');
+            const userDni = localStorage.getItem('userDni');
+    
+            if (!userToken || !userDni) {
+                window.location.href = '/login';
+                return;
+            }
+    
+            // 2. Mostrar el nombre del usuario en la barra superior
+            const userNameEl = document.getElementById("user-name");
+            if (userNameEl) userNameEl.textContent = `Usuario: ${userDni}`;
+    
+            // 3. Manejar cierre de sesión
+            const logoutBtn = document.getElementById("logout-btn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem("userToken");
+                    localStorage.removeItem("userDni");
+                    window.location.href = "/login";
+                });
+            }
+    
+            // 4. Cargar médicos en el selector
             const select = document.getElementById("medico");
             fetch("/api/medicos")
                 .then(res => res.json())
@@ -150,37 +173,38 @@
                         select.appendChild(option);
                     });
                 });
-        });
-
-        // Enviar cita
-        document.getElementById("cita-form").addEventListener("submit", e => {
-            e.preventDefault();
-
-            const cita = {
-                medico_id: document.getElementById("medico").value,
-                Paciente: document.getElementById("nombre").value,
-                Apellido: document.getElementById("apellido").value,
-                DNI: document.getElementById("dni").value,
-                Fecha: document.getElementById("fecha").value + "T" + document.getElementById("hora").value,
-                Motivo: document.getElementById("motivo").value
-            };
-
-            fetch("/api/citas", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(cita)
-            })
-            .then(res => {
-                const mensaje = document.getElementById("mensaje");
-                if (res.ok) {
-                    mensaje.textContent = "✅ Cita registrada correctamente.";
-                    mensaje.style.color = "green";
-                } else {
-                    mensaje.textContent = "❌ Error al registrar la cita.";
-                    mensaje.style.color = "red";
-                }
+    
+            // 5. Enviar cita
+            const form = document.getElementById("cita-form");
+            form.addEventListener("submit", e => {
+                e.preventDefault();
+    
+                const cita = {
+                    medico_id: document.getElementById("medico").value,
+                    Paciente: document.getElementById("nombre").value,
+                    Apellido: document.getElementById("apellido").value,
+                    DNI: document.getElementById("dni").value,
+                    Fecha: document.getElementById("fecha").value + "T" + document.getElementById("hora").value,
+                    Motivo: document.getElementById("motivo").value
+                };
+    
+                fetch("/api/citas", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(cita)
+                })
+                .then(res => {
+                    const mensaje = document.getElementById("mensaje");
+                    if (res.ok) {
+                        mensaje.textContent = "✅ Cita registrada correctamente.";
+                        mensaje.style.color = "green";
+                    } else {
+                        mensaje.textContent = "❌ Error al registrar la cita.";
+                        mensaje.style.color = "red";
+                    }
+                });
             });
         });
-    </script>
+    </script>    
 </body>
 </html>
