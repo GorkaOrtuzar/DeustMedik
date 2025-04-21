@@ -13,11 +13,15 @@ public class LoginController {
     @Autowired
     private PacienteService pacienteService;
 
+    @GetMapping("/")
+    public String redirigirRaiz() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/login")
     public String redirigirAlLogin() {
         return "login";
     }
-
 
     @PostMapping("/login")
     public String procesarLogin(@RequestParam("dni") String dni,
