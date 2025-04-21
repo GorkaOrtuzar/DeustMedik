@@ -61,6 +61,7 @@ public class MedicoController {
             )
         }
     )
+    
     public ResponseEntity<List<Medico>> obtenerTodos() {
         List<Medico> medicos = servicioMedico.obtenerMedicos();
         
@@ -113,6 +114,22 @@ public class MedicoController {
         return new ResponseEntity<>(disponibilidad, HttpStatus.OK);
     }
 
+    @GetMapping("/medico/Horario")
+    public ResponseEntity<?> obtenerHorarioPorNombreYApellido(@RequestParam("Nombre") String nombre,
+                                                            @RequestParam("Apellido") String apellido) {
+        Medico medico = servicioMedico.buscarPorNombreYApellido(nombre, apellido);
+
+        if (medico == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(servicioMedico.obtenerDisponibilidadMedico(medico.getId()));
+    }
+
+    @GetMapping("/buscar-medicos")
+    public String mostrarPaginaBusqueda() {
+        return "buscar-medicos";
+    }
 
 
 }

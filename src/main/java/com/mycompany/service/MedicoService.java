@@ -66,7 +66,7 @@ public class MedicoService {
         return slotsDisponibles;
     }
 
-public Medico buscarPorNombreYApellido(String nombre, String apellido) {
-    return repositorioMedico.findByNombreAndApellido(nombre, apellido);
-}
+    public Medico buscarPorNombreYApellido(String nombre, String apellido) {
+        return repositorioMedico.findByNombreAndApellido(nombre, apellido);
+    }
 }
