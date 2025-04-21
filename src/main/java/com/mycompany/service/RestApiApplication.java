@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = "com.mycompany")
+//@SpringBootApplication(scanBasePackages = "com.mycompany")
+@SpringBootApplication(scanBasePackages = {"com.mycompany", "com.mycompany.cliente"})
 @EnableJpaRepositories(basePackages = "com.mycompany.repositorio")
 @EntityScan(basePackages = "com.mycompany.modelo")
 public class RestApiApplication {

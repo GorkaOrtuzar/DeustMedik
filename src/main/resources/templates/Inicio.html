@@ -221,11 +221,11 @@
             const userToken = localStorage.getItem('userToken');
             const userDni = localStorage.getItem('userDni');
             
-            if (!userToken || !userDni) {
+           // if (!userToken || !userDni) {
                 // Redirigir al login si no hay token o DNI
-                window.location.href = 'login.html';
-                return;
-            }
+           //     window.location.href = 'login.html';
+            //    return;
+            //}
             
             // Configurar el nombre de usuario (podríamos obtenerlo de la API)
             document.getElementById('user-name').textContent = `Usuario: ${userDni}`;

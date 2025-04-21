@@ -26,7 +26,7 @@ public class HospitalManager {
 
     @GetMapping("/")
     public String inicio() {
-        return "Inicio"; // para que funcione Inicio.html
+        return "inicio"; // para que funcione Inicio.html
     }
 
     @GetMapping("/medicos")
