@@ -99,34 +99,35 @@
                 window.location.href = '/login';
                 return;
             }
-
-            // Cierre de sesión
+        
+            // Botón de cierre de sesión
             document.getElementById('logout-btn').addEventListener('click', () => {
                 localStorage.removeItem('userToken');
                 localStorage.removeItem('userDni');
                 window.location.href = '/login';
             });
-
-            // Obtener el nombre del médico de la URL (query param)
+        
+            // Obtener el id del médico desde la URL
             const params = new URLSearchParams(window.location.search);
-            //const nombreMedico = params.get('nombre');
             const medicoId = params.get('medicoId');
-
+        
             if (!medicoId) {
                 document.getElementById('horario-container').textContent = 'No se ha especificado un médico.';
                 return;
             }
-
-            //document.getElementById('medico-nombre').textContent = nombreMedico;
-            //fetch(`/medicos/medico/Horario/?Nombre=${encodeURIComponent(nombreMedico)}`)
+        
+            // Petición al backend para obtener los horarios
             fetch(`/medicos/medico/Horario?id=${medicoId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data.length === 0) {
+                    console.log('Horarios recibidos:', data); // DEBUG
+        
+                    if (!Array.isArray(data) || data.length === 0) {
                         document.getElementById('horario-container').textContent = 'Este médico no tiene horarios registrados.';
                         return;
                     }
-
+        
+                    // Construir tabla HTML
                     let tableHTML = `
                         <table>
                             <thead>
@@ -138,25 +139,28 @@
                             </thead>
                             <tbody>
                     `;
-
+        
                     data.forEach(horario => {
-                        tableHTML += `
-                            <tr>
-                                <td>${horario.dia}</td>
-                                <td>${horario.hora_inicio}</td>
-                                <td>${horario.hora_fin}</td>
-                            </tr>
-                        `;
+                        if (horario && horario.dia && horario.horaInicio && horario.horaFin) {
+                            tableHTML += `
+                                <tr>
+                                    <td>${horario.dia}</td>
+                                    <td>${horario.horaInicio}</td>
+                                    <td>${horario.horaFin}</td>
+                                </tr>
+                            `;
+                        }
                     });
-
+        
                     tableHTML += `</tbody></table>`;
                     document.getElementById('horario-container').innerHTML = tableHTML;
                 })
                 .catch(error => {
-                    console.error(error);
+                    console.error('Error al obtener los horarios:', error);
                     document.getElementById('horario-container').textContent = 'Error al obtener los horarios.';
                 });
         });
     </script>
+        
 </body>
 </html>
