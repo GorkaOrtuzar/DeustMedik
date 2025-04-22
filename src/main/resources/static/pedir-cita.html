@@ -141,6 +141,7 @@
             // 1. Verificar si el usuario está autenticado
             const userToken = localStorage.getItem('userToken');
             const userDni = localStorage.getItem('userDni');
+            document.getElementById("dni").value = userDni;
     
             if (!userToken || !userDni) {
                 window.location.href = '/login';
@@ -180,14 +181,16 @@
                 e.preventDefault();
     
                 const cita = {
-                    medico_id: document.getElementById("medico").value,
-                    Paciente: document.getElementById("nombre").value,
-                    Apellido: document.getElementById("apellido").value,
-                    DNI: document.getElementById("dni").value,
-                    Fecha: document.getElementById("fecha").value + "T" + document.getElementById("hora").value,
-                    Motivo: document.getElementById("motivo").value
+                    medico: {
+                        id: parseInt(document.getElementById("medico").value)
+                    },
+                    pacienteNombre: document.getElementById("nombre").value,
+                    pacienteApellido: document.getElementById("apellido").value,
+                    pacienteDNI: document.getElementById("dni").value,
+                    fechaHora: document.getElementById("fecha").value + "T" + document.getElementById("hora").value,
+                    motivo: document.getElementById("motivo").value
                 };
-    
+                    
                 fetch("/api/citas", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
