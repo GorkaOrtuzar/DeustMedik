@@ -29,8 +29,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class PacienteController {
     private final PacienteService pacienteService;
 
-    public PacienteController(PacienteService pacienteServiceService) {
-        this.pacienteService = pacienteServiceService;
+    public PacienteController(PacienteService pacienteService) {
+        this.pacienteService = pacienteService;
     }
 
     @Operation(
@@ -53,34 +53,5 @@ public class PacienteController {
           new ResponseEntity<>(HttpStatus.UNAUTHORIZED)
        );
     }
-
-@Operation(
-   summary = "Obtener historial de citas",
-   description = "Devuelve el historial de citas del paciente identificado por su DNI.",
-   responses = {@ApiResponse(
-             responseCode = "200",
-             description = "OK: Retorna la lista de citas"
-             ), @ApiResponse(
-             responseCode = "401",
-             description = "Unauthorized: DNI inválido o no autorizado"
-             )}
-)
-@GetMapping({"/citas/historial/{dni}"})
-public ResponseEntity<List<Cita>> obtenerHistorialCitas(@PathVariable String dni) {
-    // Opcionalmente, aquí podrías verificar si el usuario que hace la petición
-    // está autorizado para ver el historial del DNI proporcionado
-    
-    List<Cita> citas = pacienteService.obtenerHistorialCitas(dni);
-    
-    if (citas.isEmpty() && pacienteService.getPacienteByDNI(dni) == null) {
-        // DNI no válido o paciente no encontrado
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
-    
-    return new ResponseEntity<>(citas, HttpStatus.OK);
-}
-
-
-
 
 }

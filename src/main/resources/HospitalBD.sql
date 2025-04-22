@@ -39,6 +39,7 @@ CREATE TABLE Cita (
     Apellido VARCHAR(100),
     Fecha DATETIME,
 	Motivo TEXT,
+    DNI VARCHAR(20),
 	FOREIGN KEY (medico_id) REFERENCES Medico(id) ON DELETE CASCADE   
 );
 
@@ -154,3 +155,45 @@ INSERT INTO Paciente (DNI, Nombre, Apellido, Correo, Contraseña, Historial, med
 ('44668800S', 'Lander', 'Sanz', 'lander.sanz@pacientes.com', 'landerpass', 'Paciente con control prostático anual.', 20),
 ('55779911T', 'Claudia', 'Redondo', 'claudia.redondo@pacientes.com', 'claudia789', 'Paciente con revisiones ginecológicas periódicas.', 12);
 
+
+INSERT INTO Cita (medico_id, Paciente, Apellido, Fecha, Motivo, DNI) VALUES
+(1, 'Carlos', 'Lopez', '2024-05-16', 'Chequeo hipertensión', '12345678A'),
+(1, 'Carlos', 'Lopez', '2024-04-03', 'Revisión general', '12345678A'),
+(2, 'Lucia', 'Garcia', '2024-06-18', 'Control alergias', '98765432B'),
+(2, 'Lucia', 'Garcia', '2024-04-01', 'Vacuna primavera', '98765432B'),
+(3, 'David', 'Martinez', '2024-05-11', 'Consulta por migraña', '45678901C'),
+(3, 'David', 'Martinez', '2024-03-11', 'Seguimiento tratamiento', '45678901C'),
+(4, 'Ana', 'Fernandez', '2024-04-15', 'Control de asma', '78901234D'),
+(4, 'Ana', 'Fernandez', '2024-07-06', 'Consulta por bronquitis', '78901234D'),
+(5, 'Elena', 'Sanchez', '2024-06-01', 'Control de diabetes', '89012345E'),
+(5, 'Elena', 'Sanchez', '2024-03-01', 'Análisis glucosa', '89012345E'),
+(8, 'Sergio', 'Ruiz', '2024-05-17', 'Dermatitis crónica', '11223344F'),
+(8, 'Sergio', 'Ruiz', '2024-02-25', 'Revisión de manchas', '11223344F'),
+(9, 'Maria', 'Ibáñez', '2024-05-25', 'Revisión neurológica', '22334455G'),
+(9, 'Maria', 'Ibáñez', '2024-03-11', 'Consulta por epilepsia', '22334455G'),
+(10, 'Unai', 'Garate', '2024-06-10', 'Revisión pediátrica', '33445566H'),
+(10, 'Unai', 'Garate', '2024-03-20', 'Vacunación anual', '33445566H'),
+(11, 'Nerea', 'Santos', '2024-06-12', 'Terapia psicológica', '44556677I'),
+(11, 'Nerea', 'Santos', '2024-04-22', 'Seguimiento emocional', '44556677I'),
+(12, 'Iker', 'Mendia', '2024-05-29', 'Control ginecológico', '55667788J'),
+(12, 'Iker', 'Mendia', '2024-03-15', 'Ecografía rutinaria', '55667788J'),
+(13, 'Aitor', 'Navarro', '2024-04-10', 'Revisión auditiva', '66778899K'),
+(13, 'Aitor', 'Navarro', '2024-07-12', 'Molestias en oído derecho', '66778899K'),
+(14, 'Laia', 'Echeverria', '2024-05-02', 'Control de artritis', '77889900L'),
+(14, 'Laia', 'Echeverria', '2024-06-20', 'Dolor en articulaciones', '77889900L'),
+(15, 'Markel', 'Agirre', '2024-03-21', 'Revisión nefrológica', '88990011M'),
+(15, 'Markel', 'Agirre', '2024-05-18', 'Análisis de riñón', '88990011M'),
+(16, 'Itziar', 'Lasa', '2024-04-28', 'Consulta de oncología', '99001122N'),
+(16, 'Itziar', 'Lasa', '2024-06-14', 'Revisión post-quimioterapia', '99001122N'),
+(17, 'Gonzalo', 'Serrano', '2024-03-07', 'Revisión alergias alimentarias', '00112233O'),
+(17, 'Gonzalo', 'Serrano', '2024-05-25', 'Reacción a marisco', '00112233O'),
+(18, 'Maitane', 'Rey', '2024-02-29', 'Consulta sobre lupus', '11335577P'),
+(18, 'Maitane', 'Rey', '2024-06-03', 'Análisis inmunológicos', '11335577P'),
+(19, 'Adrian', 'Pascual', '2024-04-19', 'Control de enfisema', '22446688Q'),
+(19, 'Adrian', 'Pascual', '2024-06-30', 'Revisión pulmonar', '22446688Q'),
+(15, 'Irune', 'Delgado', '2024-05-11', 'Postoperatorio de riñón', '33557799R'),
+(15, 'Irune', 'Delgado', '2024-07-05', 'Ecografía de seguimiento', '33557799R'),
+(20, 'Lander', 'Sanz', '2024-06-15', 'Chequeo prostático anual', '44668800S'),
+(20, 'Lander', 'Sanz', '2024-03-12', 'PSA y tacto rectal', '44668800S'),
+(12, 'Claudia', 'Redondo', '2024-04-05', 'Revisión ginecológica', '55779911T'),
+(12, 'Claudia', 'Redondo', '2024-06-10', 'Ecografía transvaginal', '55779911T');

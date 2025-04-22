@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial Médico</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+
+        .logout-btn, .back-btn {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .logout-btn:hover, .back-btn:hover {
+            background-color: white;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f8f8;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #888;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Historial Médico</div>
+        <div>
+            <button class="back-btn" onclick="window.location.href='/inicio'">Volver al Inicio</button>
+            <button class="logout-btn" id="logout-btn">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Tus citas anteriores</h2>
+        <div id="historial-container" class="empty-state">Cargando historial...</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dni = localStorage.getItem("userDni");
+            const token = localStorage.getItem("userToken");
+
+            if (!dni || !token) {
+                window.location.href = "/login";
+                return;
+            }
+
+            document.getElementById("logout-btn").addEventListener("click", () => {
+                localStorage.removeItem("userToken");
+                localStorage.removeItem("userDni");
+                window.location.href = "/login";
+            });
+
+            fetch(`/autorizacion/citas/historial/${dni}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(data => {
+                const container = document.getElementById("historial-container");
+
+                if (!data.length) {
+                    container.innerHTML = "<div class='empty-state'>No tienes citas registradas.</div>";
+                    return;
+                }
+
+                let html = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Médico</th>
+                                <th>Especialidad</th>
+                                <th>Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                data.forEach(cita => {
+                    const fecha = new Date(cita.fechaHora);
+                    html += `
+                        <tr>
+                            <td>${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+                            <td>${cita.medico.nombre} ${cita.medico.apellido}</td>
+                            <td>${cita.medico.especialidad}</td>
+                            <td>${cita.motivo}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+            })
+            .catch(err => {
+                console.error("Error al cargar el historial:", err);
+                document.getElementById("historial-container").textContent = "Error al cargar tu historial.";
+            });
+        });
+    </script>
+</body>
+</html>
