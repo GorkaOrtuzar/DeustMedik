@@ -10,7 +10,7 @@ public class Cita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
     @Column(name = "DNI")
@@ -21,7 +21,7 @@ public class Cita {
     private String pacienteApellido;
     @Column(name = "Fecha")
     private LocalDateTime fechaHora;
-    @Column(name = "Motivo de Visita")
+    @Column(name = "Motivo")
     private String motivo;
 
     public Cita() {

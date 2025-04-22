@@ -134,12 +134,11 @@
                 `;
 
                 data.forEach(cita => {
-                    const fecha = new Date(cita.fechaHora);
                     html += `
                         <tr>
-                            <td>${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-                            <td>${cita.medico.nombre} ${cita.medico.apellido}</td>
-                            <td>${cita.medico.especialidad}</td>
+                            <td>${cita.fecha.replace("T", " ").slice(0, 16)}</td>
+                            <td>${cita.medicoNombre} ${cita.medicoApellido}</td>
+                            <td>${cita.especialidad}</td>
                             <td>${cita.motivo}</td>
                         </tr>
                     `;
