@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recetas Médicas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+    }
+
+    p.subtitle {
+      text-align: center;
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .med-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .med-card:hover {
+      transform: scale(1.02);
+    }
+
+    .med-card img {
+      width: 60px;
+      margin-bottom: 15px;
+    }
+
+    .med-card h3 {
+      color: #007bff;
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    .med-card p {
+      font-size: 0.95em;
+      margin: 6px 0;
+      text-align: center;
+    }
+
+    .back-button {
+      display: block;
+      margin: 50px auto 0;
+      background-color: #007bff;
+      color: white;
+      padding: 14px 30px;
+      text-decoration: none;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1em;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Recetas Médicas</h1>
+  <p class="subtitle">Consulta información detallada sobre tus medicamentos y dónde conseguirlos</p>
+
+  <div class="card-container">
+    <div class="med-card">
+      <img src="https://img.icons8.com/fluency/48/pill.png" alt="Ibuprofeno">
+      <h3>Ibuprofeno</h3>
+      <p>Alivia el dolor, la fiebre y la inflamación. Se utiliza para cefaleas, dolores menstruales y musculares.</p>
+      <p><strong>Precio:</strong> ~3€ (20 comprimidos)</p>
+      <p><strong>Disponible en:</strong> Farmacias físicas y online como Promofarma o Dosfarma.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://img.icons8.com/color/48/pills.png" alt="Paracetamol">
+      <h3>Paracetamol</h3>
+      <p>Indicado para fiebre y dolores leves. Seguro para la mayoría de personas si se toma correctamente.</p>
+      <p><strong>Precio:</strong> ~2.5€ (20 comprimidos)</p>
+      <p><strong>Disponible en:</strong> Farmacias y supermercados autorizados.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/10447/10447200.png" alt="Amoxicilina">
+      <h3>Amoxicilina</h3>
+      <p>Antibiótico de amplio espectro para infecciones respiratorias, urinarias y otitis.</p>
+      <p><strong>Precio:</strong> ~4-6€ con receta</p>
+      <p><strong>Disponible en:</strong> Farmacias bajo prescripción médica.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://img.icons8.com/color/48/sneeze.png" alt="Loratadina">
+      <h3>Loratadina</h3>
+      <p>Antihistamínico para alergias como rinitis o urticaria sin producir somnolencia.</p>
+      <p><strong>Precio:</strong> ~3.5€ (10 comprimidos)</p>
+      <p><strong>Disponible en:</strong> Farmacias físicas y online.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1869/1869469.png" alt="Omeprazol">
+      <h3>Omeprazol</h3>
+      <p>Protector gástrico. Reduce la acidez y trata el reflujo gastroesofágico.</p>
+      <p><strong>Precio:</strong> ~2-4€ (28 cápsulas)</p>
+      <p><strong>Disponible en:</strong> Farmacias sin receta en dosis bajas.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://img.icons8.com/color/48/diabetes.png" alt="Metformina">
+      <h3>Metformina</h3>
+      <p>Medicamento oral para el tratamiento de la diabetes tipo 2, ayuda a reducir el azúcar en sangre.</p>
+      <p><strong>Precio:</strong> ~3-5€ con receta</p>
+      <p><strong>Disponible en:</strong> Farmacias con prescripción.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://img.icons8.com/color/48/sad.png" alt="Diazepam">
+      <h3>Diazepam</h3>
+      <p>Ansiolítico y relajante muscular. Se usa para ansiedad, convulsiones y espasmos.</p>
+      <p><strong>Precio:</strong> ~2.5-4€ con receta</p>
+      <p><strong>Disponible en:</strong> Solo con receta médica.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1032/1032771.png" alt="Simvastatina">
+      <h3>Simvastatina</h3>
+      <p>Reduce el colesterol LDL y el riesgo de enfermedades cardiovasculares.</p>
+      <p><strong>Precio:</strong> ~3-4€ con receta</p>
+      <p><strong>Disponible en:</strong> Farmacias con receta médica.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://img.icons8.com/color/48/lungs.png" alt="Azitromicina">
+      <h3>Azitromicina</h3>
+      <p>Antibiótico para infecciones respiratorias, de piel y transmisión sexual.</p>
+      <p><strong>Precio:</strong> ~5-7€ con receta</p>
+      <p><strong>Disponible en:</strong> Farmacias con prescripción médica.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/10447/10447185.png" alt="Salbutamol">
+      <h3>Salbutamol</h3>
+      <p>Broncodilatador de acción rápida. Se usa para el alivio del asma y EPOC.</p>
+      <p><strong>Precio:</strong> ~4-6€ (inhalador)</p>
+      <p><strong>Disponible en:</strong> Farmacias bajo receta médica.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/4437/4437766.png" alt="Ranitidina">
+      <h3>Ranitidina</h3>
+      <p>Reduce la producción de ácido estomacal. Indicada en úlceras y gastritis.</p>
+      <p><strong>Precio:</strong> Suspendido en algunos países</p>
+      <p><strong>Disponible en:</strong> Consultar disponibilidad actual.</p>
+    </div>
+
+    <div class="med-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="Levotiroxina">
+      <h3>Levotiroxina</h3>
+      <p>Sustituto hormonal para tratar el hipotiroidismo. Se toma en ayunas.</p>
+      <p><strong>Precio:</strong> ~2-4€ con receta</p>
+      <p><strong>Disponible en:</strong> Farmacias con receta médica.</p>
+    </div>
+  </div>
+
+  <a href="/inicio" class="back-button">Volver al Inicio</a>
+</body>
+</html>

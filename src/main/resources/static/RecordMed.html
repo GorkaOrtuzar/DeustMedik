@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recordatorios de Medicación</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+            margin: 0;
+            padding: 30px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .medicamento-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .medicamento-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .medicamento-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .medicamento-card img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .medicamento-card h3 {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .medicamento-card p {
+            margin: 6px 0;
+            font-size: 0.95em;
+        }
+
+        .back-button {
+            display: block;
+            margin: 50px auto 0;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recordatorios de Medicación</h1>
+    <p class="subtitle">Consulta los usos y dosis recomendadas de medicamentos comunes</p>
+
+    <div class="medicamento-container">
+        <div class="medicamento-card">
+            <img src="https://img.icons8.com/fluency/48/pill.png" alt="Ibuprofeno">
+            <h3>Ibuprofeno</h3>
+            <p><strong>Usos:</strong> Dolor, fiebre, inflamación</p>
+            <p><strong>Dosis:</strong> 400 mg cada 6-8 h</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://img.icons8.com/color/48/pills.png" alt="Paracetamol">
+            <h3>Paracetamol</h3>
+            <p><strong>Usos:</strong> Dolor leve, fiebre</p>
+            <p><strong>Dosis:</strong> 500-1000 mg cada 6-8 h</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/10447/10447200.png" alt="Amoxicilina">
+            <h3>Amoxicilina</h3>
+            <p><strong>Usos:</strong> Infecciones bacterianas</p>
+            <p><strong>Dosis:</strong> 500 mg cada 8 h</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://img.icons8.com/color/48/sneeze.png" alt="Loratadina">
+            <h3>Loratadina</h3>
+            <p><strong>Usos:</strong> Alergias</p>
+            <p><strong>Dosis:</strong> 10 mg al día</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1869/1869469.png" alt="Omeprazol">
+            <h3>Omeprazol</h3>
+            <p><strong>Usos:</strong> Reflujo, acidez estomacal</p>
+            <p><strong>Dosis:</strong> 20 mg al día</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://img.icons8.com/color/48/diabetes.png" alt="Metformina">
+            <h3>Metformina</h3>
+            <p><strong>Usos:</strong> Diabetes tipo 2</p>
+            <p><strong>Dosis:</strong> 500 mg dos veces al día</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://img.icons8.com/color/48/sad.png" alt="Diazepam">
+            <h3>Diazepam</h3>
+            <p><strong>Usos:</strong> Ansiedad, espasmos</p>
+            <p><strong>Dosis:</strong> 5-10 mg al día</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1032/1032771.png" alt="Simvastatina">
+            <h3>Simvastatina</h3>
+            <p><strong>Usos:</strong> Colesterol alto</p>
+            <p><strong>Dosis:</strong> 20-40 mg por la noche</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://img.icons8.com/color/48/lungs.png" alt="Azitromicina">
+            <h3>Azitromicina</h3>
+            <p><strong>Usos:</strong> Infecciones respiratorias</p>
+            <p><strong>Dosis:</strong> 500 mg/día durante 3 días</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/10447/10447185.png" alt="Salbutamol">
+            <h3>Salbutamol</h3>
+            <p><strong>Usos:</strong> Asma, broncoespasmo</p>
+            <p><strong>Dosis:</strong> 1-2 inhalaciones cada 4-6 h</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/4437/4437766.png" alt="Ranitidina">
+            <h3>Ranitidina</h3>
+            <p><strong>Usos:</strong> Acidez estomacal, úlceras</p>
+            <p><strong>Dosis:</strong> 150 mg dos veces al día</p>
+        </div>
+        <div class="medicamento-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="Levotiroxina">
+            <h3>Levotiroxina</h3>
+            <p><strong>Usos:</strong> Hipotiroidismo</p>
+            <p><strong>Dosis:</strong> 50-100 mcg al día</p>
+        </div>
+    </div>
+
+    <a href="/inicio" class="back-button">Volver al Inicio</a>
+</body>
+</html>
