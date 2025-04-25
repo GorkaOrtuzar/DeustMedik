@@ -343,7 +343,7 @@
         async function cargarProximasCitas() {
             const userDni = localStorage.getItem('userDni');
             const container = document.getElementById('proximas-citas-container');
-    
+
             try {
                 const response = await fetch(`/autorizacion/citas/historial/${userDni}`, {
                     method: 'GET',
@@ -351,15 +351,15 @@
                         'Authorization': `Bearer ${localStorage.getItem('userToken')}`
                     }
                 });
-    
+
                 if (response.ok) {
                     const citas = await response.json();
-    
+
                     const citasFuturas = citas
-                        .filter(cita => new Date(cita.fechaHora) > new Date())
-                        .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora))
+                        .filter(cita => new Date(cita.fecha) > new Date())
+                        .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
                         .slice(0, 5);
-    
+
                     if (citasFuturas.length > 0) {
                         let tableHTML = `
                             <table>
@@ -374,20 +374,20 @@
                                 </thead>
                                 <tbody>
                         `;
-    
+
                         citasFuturas.forEach(cita => {
-                            const fecha = new Date(cita.fechaHora);
+                            const fecha = new Date(cita.fecha);
                             tableHTML += `
                                 <tr>
                                     <td>${fecha.toLocaleDateString()}</td>
                                     <td>${fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
-                                    <td>${cita.medico.nombre} ${cita.medico.apellido}</td>
-                                    <td>${cita.medico.especialidad}</td>
+                                    <td>${cita.medicoNombre} ${cita.medicoApellido}</td>
+                                    <td>${cita.especialidad}</td>
                                     <td>${cita.motivo}</td>
                                 </tr>
                             `;
                         });
-    
+
                         tableHTML += `</tbody></table>`;
                         container.innerHTML = tableHTML;
                     } else {
@@ -401,6 +401,7 @@
                 container.innerHTML = '<div class="empty-state">Error al conectar con el servidor.</div>';
             }
         }
+
     </script>
     
 </body>
