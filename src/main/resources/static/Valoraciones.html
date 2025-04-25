@@ -80,6 +80,45 @@
             justify-content: space-between;
             margin-top: 2rem;
         }
+
+        #valoracion-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000aa;
+            z-index: 1000;
+        }
+
+        #valoracion-modal .modal-content {
+            background: white;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 10% auto;
+            border-radius: 8px;
+        }
+
+        #valoracion-modal textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        #valoracion-modal button {
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        #valoracion-modal button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -88,59 +127,120 @@
         <a href="/inicio" class="back-button">Volver al Inicio</a>
     </nav>
 
-    <div class="review">
-        <div class="review-title">Dra. Naroa Azcona - Traumatología</div>
-        <div class="review-time">Hace 2 días</div>
-        <div class="review-body">Gracias a su tratamiento pude volver a caminar sin dolor. Profesional y cercana en todo momento.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dr. Jorge Martinez - Cardiología</div>
-        <div class="review-time">Hace 4 días</div>
-        <div class="review-body">Detectó a tiempo una arritmia que otros habían pasado por alto. Un gran cardiólogo, muy humano.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dra. Jacqueline Furelos - Oftalmología</div>
-        <div class="review-time">Hace 1 semana</div>
-        <div class="review-body">Me explicó con detalle todo sobre mi operación de miopía. Inspira mucha confianza.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dra. Leire Zabala - Dermatología</div>
-        <div class="review-time">Hace 3 semanas</div>
-        <div class="review-body">El tratamiento para mi acné ha funcionado mejor de lo esperado. Muy agradecida.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dra. Irati Goikoetxea - Pediatría</div>
-        <div class="review-time">Hace 5 días</div>
-        <div class="review-body">Mi hija iba con miedo y salió sonriendo. Tiene un trato excelente con los niños.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dr. Mikel Iglesias - Neurología</div>
-        <div class="review-time">Hace 2 semanas</div>
-        <div class="review-body">Muy atento y riguroso con los diagnósticos. Se nota que sabe mucho de su especialidad.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dr. Oier Castro - Dermatología</div>
-        <div class="review-time">Hace 4 semanas</div>
-        <div class="review-body">Rápido, claro y muy profesional. Eliminó un lunar con total precisión y sin dolor.</div>
-    </div>
-    
-    <div class="review">
-        <div class="review-title">Dr. Iñigo Torres - Pediatría</div>
-        <div class="review-time">Hace 1 mes</div>
-        <div class="review-body">Se ganó a mi hijo en segundos. Excelente trato, muy empático y paciente.</div>
-    </div>
-    
+    <div class="container" id="contenedor-valoraciones">
+        <div class="review">
+            <div class="review-title">Dra. Naroa Azcona - Traumatología</div>
+            <div class="review-time">Hace 2 días</div>
+            <div class="review-body">Gracias a su tratamiento pude volver a caminar sin dolor. Profesional y cercana en todo momento.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dr. Jorge Martinez - Cardiología</div>
+            <div class="review-time">Hace 4 días</div>
+            <div class="review-body">Detectó a tiempo una arritmia que otros habían pasado por alto. Un gran cardiólogo, muy humano.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dra. Jacqueline Furelos - Oftalmología</div>
+            <div class="review-time">Hace 1 semana</div>
+            <div class="review-body">Me explicó con detalle todo sobre mi operación de miopía. Inspira mucha confianza.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dra. Leire Zabala - Dermatología</div>
+            <div class="review-time">Hace 3 semanas</div>
+            <div class="review-body">El tratamiento para mi acné ha funcionado mejor de lo esperado. Muy agradecida.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dra. Irati Goikoetxea - Pediatría</div>
+            <div class="review-time">Hace 5 días</div>
+            <div class="review-body">Mi hija iba con miedo y salió sonriendo. Tiene un trato excelente con los niños.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dr. Mikel Iglesias - Neurología</div>
+            <div class="review-time">Hace 2 semanas</div>
+            <div class="review-body">Muy atento y riguroso con los diagnósticos. Se nota que sabe mucho de su especialidad.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dr. Oier Castro - Dermatología</div>
+            <div class="review-time">Hace 4 semanas</div>
+            <div class="review-body">Rápido, claro y muy profesional. Eliminó un lunar con total precisión y sin dolor.</div>
+        </div>
+        
+        <div class="review">
+            <div class="review-title">Dr. Iñigo Torres - Pediatría</div>
+            <div class="review-time">Hace 1 mes</div>
+            <div class="review-body">Se ganó a mi hijo en segundos. Excelente trato, muy empático y paciente.</div>
+        </div>
 
         <div class="buttons">
             <a href="/inicio" class="back-button">Volver al Inicio</a>
             <a href="#" class="add-button">Hacer Valoración</a>
         </div>
     </div>
+
+    <div id="valoracion-modal">
+        <div class="modal-content">
+            <h2>Escribe tu valoración</h2>
+            <textarea id="nueva-valoracion"></textarea>
+            <br>
+            <button onclick="guardarValoracion()">Guardar</button>
+            <button onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.add-button').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('valoracion-modal').style.display = 'block';
+        });
+
+        function cerrarModal() {
+            document.getElementById('valoracion-modal').style.display = 'none';
+        }
+
+        function guardarValoracion() {
+            const texto = document.getElementById('nueva-valoracion').value.trim();
+            if (texto !== "") {
+                const nueva = {
+                    titulo: "Mi valoración personal",
+                    fecha: new Date().toLocaleDateString(),
+                    contenido: texto
+                };
+
+                localStorage.setItem("valoracionTemp", JSON.stringify(nueva));
+
+                insertarValoracion(nueva);
+                cerrarModal();
+                document.getElementById('nueva-valoracion').value = "";
+            } else {
+                alert("Por favor, escribe una valoración antes de guardar.");
+            }
+        }
+
+        function insertarValoracion(valoracion) {
+            const container = document.getElementById("contenedor-valoraciones");
+            const review = document.createElement("div");
+            review.className = "review";
+            review.innerHTML = `
+                <div class="review-title">${valoracion.titulo}</div>
+                <div class="review-time">${valoracion.fecha}</div>
+                <div class="review-body">${valoracion.contenido}</div>
+            `;
+            const buttons = container.querySelector('.buttons');
+            container.insertBefore(review, buttons);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const temp = localStorage.getItem("valoracionTemp");
+            if (temp) {
+                const data = JSON.parse(temp);
+                insertarValoracion(data);
+            }
+        });
+    </script>
 </body>
 </html>
