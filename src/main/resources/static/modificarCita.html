@@ -100,6 +100,7 @@
 
   <div class="container">
     <h2>Citas próximas</h2>
+    <p>Sumar 2h a la hora seleccionada, el sistema usa +02:00, siempre que se actualiza la cita resta 2 horas</p>
     <div id="tabla-citas" class="empty-state">Cargando citas...</div>
   </div>
 
@@ -141,7 +142,7 @@
             const fechaObj = new Date(cita.fechaHora);
             const fechaLocal = new Date(fechaObj.getTime() - fechaObj.getTimezoneOffset() * 60000);
             const fechaISO = fechaLocal.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
-    
+            
             html += `
               <tr data-id="${cita.id}">
                 <td><input type="datetime-local" id="fecha-${cita.id}" value="${fechaISO}"></td>
