@@ -167,6 +167,24 @@
             padding: 2rem;
             color: #a0aec0;
         }
+
+        .notif-btn {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notif-btn:hover {
+            background-color: white;
+            color: #2c3e50;
+        }
+
     </style>
 </head>
 <body>
@@ -174,6 +192,7 @@
         <div class="navbar-brand">Sistema Médico</div>
         <div class="user-info">
             <span class="user-name" id="user-name" th:if="${usuario != null}" th:text="${usuario.nombre}">Cargando...</span>
+            <button id="notifications-btn" class="notif-btn" title="Ver notificaciones">🔔</button>
             <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
         </div>
     </nav>
@@ -208,9 +227,9 @@
 
             <div class="action-card">
                 <div class="action-icon">💬</div>
-                <h3 class="action-title">Ver Comentarios</h3>
+                <h3 class="action-title">Ver Valoraciones</h3>
                 <p class="action-description">Lee opiniones y experiencias de otros pacientes sobre el hospital.</p>
-                <a href="/proximamente" class="action-button">Ver Comentarios</a>
+                <a href="Valoraciones.html" class="action-button">Ver Valoraciones</a>
             </div>
 
             <div class="action-card">
@@ -246,6 +265,27 @@
                 <h3 class="action-title">Recetas Médicas</h3>
                 <p class="action-description">Consulta informacion detallada de los medicamentos mas comunes, desde casa con total comodidad.</p>
                 <a href="Medicamento.html" class="action-button">Ver Recetas</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">💳</div>
+                <h3 class="action-title">Plataforma de Pagos</h3>
+                <p class="action-description">Gestiona tus pagos de forma segura y rápida desde nuestra plataforma digital.</p>
+                <a href="/proximamente" class="action-button">Ir a Pagos</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">✉️</div>
+                <h3 class="action-title">Mensajes a Médicos</h3>
+                <p class="action-description">Envía mensajes o consulta dudas directamente con tus médicos de confianza.</p>
+                <a href="/proximamente" class="action-button">Enviar Mensaje</a>
+            </div>
+            
+            <div class="action-card">
+                <div class="action-icon">🛠️</div>
+                <h3 class="action-title">Modificar Citas</h3>
+                <p class="action-description">Consulta, reprograma o cancela tus citas médicas de forma sencilla y rápida.</p>
+                <a href="/proximamente" class="action-button">Editar Citas</a>
             </div>
             
             
@@ -285,6 +325,15 @@
                 });
             } else {
                 console.warn("No se encontró el botón de cerrar sesión");
+            }
+
+            const notifBtn = document.getElementById('notifications-btn');
+            if (notifBtn) {
+                notifBtn.addEventListener('click', function () {
+                    window.location.href = '/Notificacion.html';
+                });
+            } else {
+                console.warn("No se encontro el botón de Notificación");
             }
     
             // Cargar citas futuras

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificaciones - Sistema Médico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .notification {
+            background-color: #ecf0f1;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-time {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+
+        .no-notifications {
+            color: #7f8c8d;
+            text-align: center;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Notificaciones</h1>
+        <a href="/inicio" class="back-button">Volver al Inicio</a>
+    </nav>
+
+    <div class="container" id="notifications-container">
+        <div class="notification">
+            <div class="notification-title">Bienvenido de nuevo</div>
+            <div class="notification-time">Hace 5 segundos</div>
+            <div class="notification-body">Te damos la bienvenida a nuesto sistema.</div>
+        </div>
+
+        <div class="notification">
+            <div class="notification-title">Recordatorio de cita</div>
+            <div class="notification-time">Hace 2 minutos</div>
+            <div class="notification-body">Recuerda siempre revisar tus próximas citas al final de la Web.</div>
+        </div>
+
+        <div class="notification">
+            <div class="notification-title">Resultado de análisis disponible</div>
+            <div class="notification-time">Hace 2 horas</div>
+            <div class="notification-body">Tu análisis de sangre ya está disponible.</div>
+        </div>
+
+        
+    </div>
+
+    <script>
+        // JS opcional: por ejemplo, podrías cargar notificaciones dinámicamente aquí si lo necesitas
+        // window.onload = () => {
+        //     alert("¡Has accedido a tus notificaciones!");
+        // }
+    </script>
+</body>
+</html>

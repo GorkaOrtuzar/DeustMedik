@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donación de Sangre - Hospital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #c0392b;
+      --secondary-color: #ecf0f1;
+      --accent-color: #e74c3c;
+      --text-color: #2c3e50;
+      --max-width: 1200px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--secondary-color);
+      line-height: 1.6;
+    }
+    header {
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .hero .btn {
+      background: white;
+      color: var(--primary-color);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+    .hero .btn:hover {
+      background: var(--secondary-color);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card h3 {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+    .steps {
+      margin-bottom: 2rem;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .step-item .step-number {
+      background: var(--primary-color);
+      color: white;
+      font-weight: bold;
+      height: 2rem;
+      width: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+    .cta {
+      background: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .cta .btn {
+      background: white;
+      color: var(--primary-color);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+    }
+    .back-button {
+      display: block;
+      margin: 50px auto 0;
+      background-color: #ff4400;
+      color: white;
+      padding: 14px 30px;
+      text-decoration: none;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1em;
+    }
+
+    .back-button:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>Hospital DeustoMedik</h2>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Salva Vidas: Dona Sangre</h1>
+      <p>Tu donación cuenta. Menos de 1% de la población dona sangre regularmente. ¡Únete y marca la diferencia!</p>
+      <a href="#registro" class="btn">Regístrate Ahora</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="cards">
+      <div class="card">
+        <h3>¿Por qué donar?</h3>
+        <p>La sangre es esencial para transfusiones en emergencias, cirugías y tratamientos crónicos.</p>
+      </div>
+      <div class="card">
+        <h3>¿Quién puede donar?</h3>
+        <p>Mayores de 18 años, saludables, con peso mínimo de 50 kg. Se evalúa tu historial médico.</p>
+      </div>
+      <div class="card">
+        <h3>Proceso</h3>
+        <p>Registro, chequeo médico, extracción y recuperación en 30 minutos.</p>
+      </div>
+      <div class="card">
+        <h3>Beneficios</h3>
+        <p>Mejora tu salud cardiovascular y recibe análisis de salud gratuitos.</p>
+      </div>
+    </section>
+
+    <section class="steps">
+      <h2>Pasos para donar</h2>
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div>
+          <h4 id="registro">Registro</h4>
+          <p>Completa el formulario en línea o en el hospital.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div>
+          <h4>Chequeo Médico</h4>
+          <p>Revisión de presión, hemoglobina y salud general.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div>
+          <h4>Extracción</h4>
+          <p>Se toma aproximadamente 450 ml de sangre.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">4</div>
+        <div>
+          <h4>Descanso</h4>
+          <p>Reponer energías con un refrigerio y reposo breve.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>¡Programa tu Donación Hoy!</h2>
+    </section>
+  </div>
+
+  <a href="/inicio" class="back-button">Volver al Inicio</a>
+
+  <footer>
+    &copy; 2025 DeustoMedik. Todos los derechos reservados.
+  </footer>
+</body>
+</html>
