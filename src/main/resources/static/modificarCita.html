@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modificar Citas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #2c3e50;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      background-color: transparent;
+      border: 1px solid white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    .navbar a:hover {
+      background-color: white;
+      color: #2c3e50;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f8f8f8;
+    }
+
+    input[type="datetime-local"],
+    input[type="text"] {
+      width: 90%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 6px 12px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #888;
+      padding: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div><strong>Modificar Citas</strong></div>
+    <a href="/inicio">Volver al Inicio</a>
+  </div>
+
+  <div class="container">
+    <h2>Citas próximas</h2>
+    <div id="tabla-citas" class="empty-state">Cargando citas...</div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const dni = localStorage.getItem("userDni");
+      const token = localStorage.getItem("userToken");
+    
+      if (!dni || !token) {
+        window.location.href = "/login";
+        return;
+      }
+    
+      fetch(`/api`, {
+        method: "GET"
+      })
+      .then(res => res.json())
+      .then(citas => {
+        const futuras = citas
+          .filter(c => c.pacienteDNI === dni && new Date(c.fechaHora) > new Date())
+          .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora));
+    
+        if (futuras.length === 0) {
+          document.getElementById("tabla-citas").innerHTML = "<div class='empty-state'>No tienes citas futuras.</div>";
+          return;
+        }
+    
+        let html = `
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha y Hora</th>
+                <th>Motivo</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+    
+        futuras.forEach(cita => {
+          const fechaObj = new Date(cita.fechaHora);
+          const fechaLocal = new Date(fechaObj.getTime() - fechaObj.getTimezoneOffset() * 60000);
+          const fechaISO = fechaLocal.toISOString().slice(0, 16);
+    
+          html += `
+            <tr data-id="${cita.id}">
+              <td><input type="datetime-local" value="${fechaISO}" id="fecha-${cita.id}"></td>
+              <td><input type="text" value="${cita.motivo}" id="motivo-${cita.id}"></td>
+              <td><button onclick="guardarCita(${cita.id})">Guardar</button></td>
+            </tr>
+          `;
+        });
+    
+        html += `</tbody></table>`;
+        document.getElementById("tabla-citas").innerHTML = html;
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("tabla-citas").textContent = "Error al cargar citas.";
+      });
+    });
+    
+    function guardarCita(id) {
+      const fecha = document.getElementById(`fecha-${id}`).value;
+      const motivo = document.getElementById(`motivo-${id}`).value;
+    
+      fetch(`/citas/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fechaHora: fecha,
+          motivo: motivo
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Cita actualizada correctamente.");
+        } else {
+          alert("Error al actualizar la cita.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Fallo al conectar con el servidor.");
+      });
+    }
+    </script>
+    
+
+</body>
+</html>

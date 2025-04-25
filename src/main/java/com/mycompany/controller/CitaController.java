@@ -30,4 +30,15 @@ public class CitaController {
         return ResponseEntity.ok(nueva);
     }
 
+    @PutMapping("/citas/{id}")
+    public ResponseEntity<?> actualizarCita(@PathVariable Long id, @RequestBody Cita nuevaCita) {
+        return repositorioCita.findById(id).map(cita -> {
+            cita.setFechaHora(nuevaCita.getFechaHora());
+            cita.setMotivo(nuevaCita.getMotivo());
+            repositorioCita.save(cita);
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+
 }
