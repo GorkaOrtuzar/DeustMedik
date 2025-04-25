@@ -113,68 +113,88 @@
         return;
       }
     
-      fetch(`/api`, {
-        method: "GET"
-      })
-      .then(res => res.json())
-      .then(citas => {
-        const futuras = citas
-          .filter(c => c.pacienteDNI === dni && new Date(c.fechaHora) > new Date())
-          .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora));
+      fetch(`/api`)
+        .then(res => res.json())
+        .then(citas => {
+          const futuras = citas
+            .filter(c => c.pacienteDNI === dni && new Date(c.fechaHora) > new Date())
+            .sort((a, b) => new Date(a.fechaHora) - new Date(b.fechaHora));
     
-        if (futuras.length === 0) {
-          document.getElementById("tabla-citas").innerHTML = "<div class='empty-state'>No tienes citas futuras.</div>";
-          return;
-        }
+          if (futuras.length === 0) {
+            document.getElementById("tabla-citas").innerHTML = "<div class='empty-state'>No tienes citas futuras.</div>";
+            return;
+          }
     
-        let html = `
-          <table>
-            <thead>
-              <tr>
-                <th>Fecha y Hora</th>
-                <th>Motivo</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-    
-        futuras.forEach(cita => {
-          const fechaObj = new Date(cita.fechaHora);
-          const fechaLocal = new Date(fechaObj.getTime() - fechaObj.getTimezoneOffset() * 60000);
-          const fechaISO = fechaLocal.toISOString().slice(0, 16);
-    
-          html += `
-            <tr data-id="${cita.id}">
-              <td><input type="datetime-local" value="${fechaISO}" id="fecha-${cita.id}"></td>
-              <td><input type="text" value="${cita.motivo}" id="motivo-${cita.id}"></td>
-              <td><button onclick="guardarCita(${cita.id})">Guardar</button></td>
-            </tr>
+          let html = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha y Hora</th>
+                  <th>Motivo</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
           `;
-        });
     
-        html += `</tbody></table>`;
-        document.getElementById("tabla-citas").innerHTML = html;
-      })
-      .catch(err => {
-        console.error(err);
-        document.getElementById("tabla-citas").textContent = "Error al cargar citas.";
-      });
+          futuras.forEach(cita => {
+            const fechaObj = new Date(cita.fechaHora);
+            const fechaLocal = new Date(fechaObj.getTime() - fechaObj.getTimezoneOffset() * 60000);
+            const fechaISO = fechaLocal.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+    
+            html += `
+              <tr data-id="${cita.id}">
+                <td><input type="datetime-local" id="fecha-${cita.id}" value="${fechaISO}"></td>
+                <td><input type="text" id="motivo-${cita.id}" value="${cita.motivo}"></td>
+                <td><button class="btn-guardar" data-id="${cita.id}">Guardar</button></td>
+              </tr>
+            `;
+          });
+    
+          html += `</tbody></table>`;
+          document.getElementById("tabla-citas").innerHTML = html;
+    
+          document.querySelectorAll('.btn-guardar').forEach(boton => {
+            boton.addEventListener('click', e => {
+              const id = e.currentTarget.getAttribute('data-id');
+              guardarCita(id);
+            });
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById("tabla-citas").textContent = "Error al cargar citas.";
+        });
     });
     
-    function guardarCita(id) {
-      const fecha = document.getElementById(`fecha-${id}`).value;
-      const motivo = document.getElementById(`motivo-${id}`).value;
+    function guardarCita(citaId) {
+      console.log("Guardando cita con ID:", citaId);
     
-      fetch(`/citas/${id}`, {
+      const campoFecha = document.getElementById(`fecha-${citaId}`);
+      const campoMotivo = document.getElementById(`motivo-${citaId}`);
+    
+      if (!campoFecha || !campoMotivo) {
+        alert("No se encontraron los campos para actualizar.");
+        return;
+      }
+    
+      const fechaISO = new Date(campoFecha.value).toISOString().split(".")[0]; // Quita milisegundos
+      const motivo = campoMotivo.value;
+    
+      const data = {
+        id: parseInt(citaId),
+        fechaHora: fechaISO,
+        motivo: motivo
+      };
+    
+      console.log("Enviando:", data);
+    
+      fetch("/api/citas", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          fechaHora: fecha,
-          motivo: motivo
-        })
+        body: JSON.stringify(data)
       })
       .then(res => {
         if (res.ok) {
@@ -189,6 +209,7 @@
       });
     }
     </script>
+    
     
 
 </body>

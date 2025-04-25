@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import com.mycompany.DTO.ModificarCitaDTO;
 import com.mycompany.modelo.Cita;
 import com.mycompany.repositorio.RepositorioCita;
 
@@ -30,15 +31,15 @@ public class CitaController {
         return ResponseEntity.ok(nueva);
     }
 
-    @PutMapping("/citas/{id}")
-    public ResponseEntity<?> actualizarCita(@PathVariable Long id, @RequestBody Cita nuevaCita) {
-        return repositorioCita.findById(id).map(cita -> {
-            cita.setFechaHora(nuevaCita.getFechaHora());
-            cita.setMotivo(nuevaCita.getMotivo());
+    @PutMapping("/citas")
+    public ResponseEntity<?> actualizarCita(@RequestBody ModificarCitaDTO dto) {
+        System.out.println("Recibido DTO: " + dto.getId() + " - " + dto.getFechaHora() + " - " + dto.getMotivo());
+        return repositorioCita.findById(dto.getId()).map(cita -> {
+            cita.setFechaHora(dto.getFechaHora());
+            cita.setMotivo(dto.getMotivo());
             repositorioCita.save(cita);
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
     }
-
 
 }
