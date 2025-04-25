@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Noticias - DeustMedik</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .news-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .news-title {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .news-content {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Noticias y Comunicados del Hospital</h1>
+
+        <div class="news-card">
+            <h2 class="news-title">Nuevo servicio de cardiología disponible</h2>
+            <p class="news-content">A partir del 5 de mayo, el hospital contará con un nuevo servicio de cardiología avanzada, con equipos de última generación y nuevos especialistas disponibles para consulta.</p>
+        </div>
+
+        <div class="news-card">
+            <h2 class="news-title">Alerta: campaña de vacunación activa</h2>
+            <p class="news-content">La campaña de vacunación contra la gripe estacional ya está en marcha. Acude sin cita previa al módulo 3 entre las 9:00 y 13:00 hasta el 30 de abril.</p>
+        </div>
+
+        <div class="news-card">
+            <h2 class="news-title">Reformas en el ala de urgencias</h2>
+            <p class="news-content">Desde el 20 de abril se están llevando a cabo obras de mejora en urgencias. El acceso será por la entrada sur. Rogamos disculpas por las molestias.</p>
+        </div>
+
+        <div class="news-card">
+            <h2 class="news-title">Donación de sangre: ¡te necesitamos!</h2>
+            <p class="news-content">Puedes acudir al hospital de lunes a viernes de 9:00 a 14:00 para donar sangre. Cada donación salva vidas. ¡Gracias por tu colaboración!</p>
+        </div>
+
+        <div class="news-card">
+            <h2 class="news-title">Horarios especiales durante festivos</h2>
+            <p class="news-content">Durante la semana del 1 de mayo, los servicios de laboratorio y atención administrativa permanecerán cerrados los días 1 y 2. Las urgencias funcionarán con normalidad.</p>
+        </div>
+
+        <a href="/inicio" class="back-button">Volver al Inicio</a>
+    </div>
+</body>
+</html>
