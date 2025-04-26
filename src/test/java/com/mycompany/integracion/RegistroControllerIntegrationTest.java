@@ -25,7 +25,7 @@ public class RegistroControllerIntegrationTest {
     @Test
     public void registrarPacienteTest() throws Exception {
         Paciente paciente = new Paciente();
-        paciente.setDni("12345678Z");
+        paciente.setDni("99999998X");
         paciente.setNombre("Juan");
         paciente.setApellido("Pérez");
         paciente.setCorreo("juan.perez@example.com");
