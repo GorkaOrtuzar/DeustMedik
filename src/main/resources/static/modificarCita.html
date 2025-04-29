@@ -147,7 +147,10 @@
               <tr data-id="${cita.id}">
                 <td><input type="datetime-local" id="fecha-${cita.id}" value="${fechaISO}"></td>
                 <td><input type="text" id="motivo-${cita.id}" value="${cita.motivo}"></td>
-                <td><button class="btn-guardar" data-id="${cita.id}">Guardar</button></td>
+                <td>
+                  <button class="btn-guardar" data-id="${cita.id}">Guardar</button>
+                  <button class="btn-borrar" data-id="${cita.id}">Eliminar</button>
+                </td>
               </tr>
             `;
           });
@@ -159,6 +162,13 @@
             boton.addEventListener('click', e => {
               const id = e.currentTarget.getAttribute('data-id');
               guardarCita(id);
+            });
+          });
+
+          document.querySelectorAll('.btn-borrar').forEach(boton => {
+            boton.addEventListener('click', e => {
+              const id = e.currentTarget.getAttribute('data-id');
+              borrarCita(id);
             });
           });
         })
@@ -209,6 +219,30 @@
         alert("Fallo al conectar con el servidor.");
       });
     }
+
+    function borrarCita(citaId) {
+      if (!confirm("¿Estás seguro de que quieres eliminar esta cita?")) {
+        return;
+      }
+
+      fetch(`/api/citas/${citaId}`, {
+        method: "DELETE"
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Cita eliminada correctamente.");
+          // Recargar citas después de borrar
+          location.reload();
+        } else {
+          alert("Error al eliminar la cita.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Fallo al conectar con el servidor.");
+      });
+    }
+
     </script>
     
     

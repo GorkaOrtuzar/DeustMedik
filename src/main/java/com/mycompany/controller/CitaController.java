@@ -42,4 +42,15 @@ public class CitaController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("/citas/{id}")
+    public ResponseEntity<Void> eliminarCita(@PathVariable("id") Long id) {
+        if (repositorioCita.existsById(id)) {
+            repositorioCita.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }
