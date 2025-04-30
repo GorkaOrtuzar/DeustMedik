@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>   
   <meta charset="UTF-8">
   <title>Plataforma de Pagos</title>
   <style>
@@ -195,19 +196,47 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        doc.setFontSize(18);
-        doc.text("Factura de Servicio Médico", 20, 20);
+        doc.setFontSize(20);
+        doc.text("Factura Médica", 105, 20, { align: "center" });
 
         doc.setFontSize(12);
-        doc.text(`Servicio contratado: ${servicio}`, 20, 40);
-        doc.text(`Titular: ${titular}`, 20, 50);
-        doc.text(`Importe: ${precio} €`, 20, 60);
-        doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 70);
+        doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 30);
+        doc.text(`Nº de Factura: ${Math.floor(100000 + Math.random() * 900000)}`, 20, 37);
 
-        doc.text("Gracias por confiar en nuestro servicio médico.", 20, 90);
+        doc.setFontSize(14);
+        doc.text("Datos del cliente:", 20, 50);
+        doc.setFontSize(12);
+        doc.text(`Titular: ${titular}`, 20, 58);
+        doc.text(`Método de pago: Tarjeta`, 20, 65);
 
-        doc.save("factura.pdf");
+        // Tabla del servicio
+        doc.autoTable({
+            startY: 80,
+            head: [['Servicio', 'Descripción', 'Precio (€)']],
+            body: [
+            [
+                servicio,
+                servicio === 'Básico' ? 'Cobertura médica general' :
+                servicio === 'Intermedio' ? 'Incluye especialistas' :
+                'Hospitalización completa + especialistas',
+                precio
+            ]
+            ],
+            theme: 'striped',
+            styles: { halign: 'center' },
+            headStyles: { fillColor: [44, 62, 80] }
+        });
+
+        doc.setFontSize(14);
+        doc.text(`Total a pagar: ${precio} €`, 20, doc.lastAutoTable.finalY + 20);
+
+        doc.setFontSize(11);
+        doc.setTextColor(100);
+        doc.text("Gracias por confiar en nuestro servicio médico. Esta factura tiene validez legal.", 20, doc.lastAutoTable.finalY + 35);
+
+        doc.save(`factura_${servicio.toLowerCase()}.pdf`);
     }
+
 
   </script>
 
