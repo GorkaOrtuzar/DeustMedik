@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Médico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ece5dd;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .navbar {
+      background-color: #075e54;
+      color: white;
+      padding: 1rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      border: 1px solid white;
+      padding: 0.4rem 1rem;
+      border-radius: 5px;
+    }
+
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .mensaje {
+      max-width: 60%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .mensaje.enviado {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+    }
+
+    .mensaje.recibido {
+      background-color: #ffffff;
+      align-self: flex-start;
+    }
+
+    .input-container {
+      display: flex;
+      padding: 1rem;
+      background-color: #f0f0f0;
+      border-top: 1px solid #ccc;
+    }
+
+    .input-container textarea {
+      flex: 1;
+      padding: 0.8rem;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      resize: none;
+      font-size: 1rem;
+    }
+
+    .input-container button {
+      margin-left: 1rem;
+      padding: 0.8rem 1.2rem;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .input-container button:hover {
+      background-color: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div>Chat con el Médico</div>
+    <a href="/inicio">Inicio</a>
+  </div>
+
+  <div id="chat" class="chat-container">
+    <!-- Mensajes aparecerán aquí -->
+  </div>
+
+  <div class="input-container">
+    <textarea id="mensaje" rows="2" placeholder="Escribe tu mensaje..."></textarea>
+    <button onclick="enviarMensaje()">Enviar</button>
+  </div>
+
+  <script>
+    function enviarMensaje() {
+      const input = document.getElementById("mensaje");
+      const texto = input.value.trim();
+      if (!texto) return;
+
+      mostrarMensaje(texto, 'enviado');
+      input.value = "";
+      input.focus();
+
+      setTimeout(() => {
+        mostrarMensaje("Gracias por tu mensaje. Te responderé pronto.", 'recibido');
+      }, 1000);
+    }
+
+    function mostrarMensaje(texto, tipo) {
+      const chat = document.getElementById("chat");
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "mensaje " + tipo;
+      msgDiv.textContent = texto;
+      chat.appendChild(msgDiv);
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>

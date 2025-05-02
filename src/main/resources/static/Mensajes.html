@@ -187,7 +187,10 @@
             mensajes.forEach(mensaje => {
                 const card = document.createElement('a');
                 card.className = 'message-card';
-                card.href = '/proximamente';
+                card.href = 'mensajeria.html';
+                card.addEventListener('click', () => {
+                localStorage.setItem('destinatarioNombre', mensaje.nombre);
+                });
                 card.innerHTML = `
                     <div class="message-name">${mensaje.nombre}</div>
                 `;
