@@ -41,19 +41,27 @@ public class MensajeService {
     }
 
     public List<ConversacionDTO> obtenerConversaciones(String usuarioDni) {
+        if (pacienteRepository.existsByDni(usuarioDni)) {
+            return medicoRepository.findAll().stream()
+                .map(m -> new ConversacionDTO(
+                    m.getDni(),
+                    m.getNombre() + " " + m.getApellido()
+                ))
+                .collect(Collectors.toList());
+        }
+
         List<String> socios = repositorioMensaje.findConversacionPartners(usuarioDni);
-    
         return socios.stream()
             .filter(Objects::nonNull)
-            .map(dni ->
+            .map(dni -> 
                 pacienteRepository.findByDni(dni)
-                    .map(p -> new ConversacionDTO(dni, p.getNombre() + " " + p.getApellido()))
-                    .orElseGet(() -> {
-                        Medico m = medicoRepository.findByDni(dni)
-                            .orElseThrow(() -> 
-                                new IllegalArgumentException("Usuario no encontrado con DNI " + dni));
-                        return new ConversacionDTO(dni, m.getNombre() + " " + m.getApellido());
-                    })
+                    .map(p -> new ConversacionDTO(
+                        dni, 
+                        p.getNombre() + " " + p.getApellido()
+                    ))
+                    .orElseThrow(() -> 
+                        new IllegalArgumentException("Paciente no encontrado con DNI " + dni)
+                    )
             )
             .collect(Collectors.toList());
     }
