@@ -129,74 +129,75 @@
         <a href="/inicio" class="back-button">
             ← Volver a Inicio
         </a>
-
         <h1 class="page-title">Enviar Mensaje</h1>
-
         <div class="messages-grid" id="messages-grid">
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const userToken = localStorage.getItem('userToken');
-            const userDni = localStorage.getItem('userDni');
-
-            if (!userToken || !userDni) {
-                window.location.href = '/login';
-                return;
+        document.addEventListener('DOMContentLoaded', () => {
+          const userToken  = localStorage.getItem('userToken');
+          const modoMedico = localStorage.getItem('modoMedico') === 'true';
+          const usuarioDni = modoMedico
+            ? localStorage.getItem('medicoDniSimulado')
+            : localStorage.getItem('userDni');
+    
+          if (!userToken || !usuarioDni) {
+            window.location.href = '/login';
+            return;
+          }
+    
+          document.getElementById('user-name').textContent = `${modoMedico ? 'Médico' : 'Paciente'}: ${usuarioDni}`;
+    
+          document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('userDni');
+            localStorage.removeItem('modoMedico');
+            localStorage.removeItem('medicoDniSimulado');
+            window.location.href = '/login';
+          });
+    
+          fetch(`/api/mensajes/conversaciones?usuarioDni=${encodeURIComponent(usuarioDni)}`, {
+            headers: { 
+              'Accept': 'application/json',
+              'Authorization': `Bearer ${userToken}`
             }
-
-            document.getElementById('user-name').textContent = `Usuario: ${userDni}`;
-
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userDni');
-                window.location.href = '/login';
+          })
+          .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+          })
+          .then(lista => {
+            const grid = document.getElementById('messages-grid');
+            grid.innerHTML = ''; 
+            lista.forEach(({ dni, nombre }) => {
+              const card = document.createElement('div');
+              card.className = 'message-card';
+              card.innerHTML = `<strong>${nombre}</strong><br><small>${dni}</small>`;
+              card.addEventListener('click', () => {
+                localStorage.setItem('destinatarioDni', dni);
+                localStorage.setItem('destinatarioNombre', nombre);
+                window.location.href = 'mensajeria.html';
+              });
+              grid.appendChild(card);
             });
-
-            cargarMensajes();
+          })
+          .catch(err => {
+            console.error('Error cargando conversaciones:', err);
+            alert('No se pudieron cargar tus conversaciones: ' + err.message);
+          });
         });
-
-        function cargarMensajes() {
-            const messagesGrid = document.getElementById('messages-grid');
-
-            const mensajes = [
-                { nombre: "Dra. Naroa Azcona" },
-                { nombre: "Dr. Gorka Ortuzar" },
-                { nombre: "Dra. Jacqueline Furelos" },
-                { nombre: "Dr. Jorge Martinez" },
-                { nombre: "Dr. Ander Perez" },
-                { nombre: "Dra. Paula Gonzalez" },
-                { nombre: "Dra. Ainhoa Saez" },
-                { nombre: "Dra. Leire Zabala" },
-                { nombre: "Dr. Mikel Iglesias" },
-                { nombre: "Dra. Irati Goikoetxea" },
-                { nombre: "Dr. Jon Etxebarria" },
-                { nombre: "Dra. Ane López" },
-                { nombre: "Dr. Iñigo Torres" },
-                { nombre: "Dra. Nerea Martinez" },
-                { nombre: "Dr. Xabier Jiménez" },
-                { nombre: "Dra. Garazi Alvarez" },
-                { nombre: "Dr. Asier Moreno" },
-                { nombre: "Dra. Amaia Diez" },
-                { nombre: "Dr. Oier Castro" },
-                { nombre: "Dra. June Urrutia" },
-                { nombre: "Servicio de Mantenimiento" }
-            ];
-
-            mensajes.forEach(mensaje => {
-                const card = document.createElement('a');
-                card.className = 'message-card';
-                card.href = 'mensajeria.html';
-                card.addEventListener('click', () => {
-                localStorage.setItem('destinatarioNombre', mensaje.nombre);
-                });
-                card.innerHTML = `
-                    <div class="message-name">${mensaje.nombre}</div>
-                `;
-                messagesGrid.appendChild(card);
-            });
-        }
-    </script>
+    
+        document.addEventListener('keydown', e => {
+          if (e.ctrlKey && e.key.toLowerCase() === 'ñ') {
+            const dniMed = prompt("Introduce DNI del médico para modo simulación:");
+            if (dniMed) {
+              localStorage.setItem('modoMedico', 'true');
+              localStorage.setItem('medicoDniSimulado', dniMed);
+              location.reload();
+            }
+          }
+        });
+    </script>  
 </body>
 </html>

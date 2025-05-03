@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface RepositorioMedico extends JpaRepository<Medico, Long> {
     Optional<Medico> findByNombre(String nombre);
     Medico findByNombreAndApellido(String nombre, String apellido);
+    Optional<Medico> findByDni(String dni);
 }

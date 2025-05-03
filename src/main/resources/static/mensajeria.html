@@ -95,12 +95,12 @@
 <body>
 
   <div class="navbar">
-    <div>Chat con el Médico</div>
+    <div id="nombre-chat">Chat con el Médico</div>
     <a href="/inicio">Inicio</a>
   </div>
+  
 
   <div id="chat" class="chat-container">
-    <!-- Mensajes aparecerán aquí -->
   </div>
 
   <div class="input-container">
@@ -109,29 +109,96 @@
   </div>
 
   <script>
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("mensaje");
+  
+    const modoMedico = localStorage.getItem("modoMedico") === "true";
+    const remitenteDni = modoMedico
+      ? localStorage.getItem("medicoDniSimulado")
+      : localStorage.getItem("userDni");
+  
+    const destinatarioDni = localStorage.getItem("destinatarioDni");
+    const destinatarioNombre = localStorage.getItem("destinatarioNombre"); // solo para mostrar en el título
+  
+    if (!remitenteDni || !destinatarioDni) {
+      alert("Faltan datos del usuario o del destinatario.");
+      window.location.href = "/inicio";
+    }
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const nombreChat = document.getElementById("nombre-chat");
+      if (nombreChat) {
+        nombreChat.textContent = `Chat con ${destinatarioNombre || destinatarioDni}`;
+      }
+  
+      if (modoMedico) {
+        const aviso = document.createElement("div");
+        aviso.textContent = `🩺 Modo Médico activo (respondiendo como ${remitenteDni})`;
+        aviso.style.backgroundColor = "#ffc107";
+        aviso.style.color = "#000";
+        aviso.style.padding = "0.5rem";
+        aviso.style.textAlign = "center";
+        aviso.style.fontWeight = "bold";
+        document.body.insertBefore(aviso, chat);
+      }
+  
+      fetch(`/api/mensajes?remitenteDni=${remitenteDni}&destinatarioDni=${encodeURIComponent(destinatarioDni)}`)
+        .then(res => res.json())
+        .then(mensajes => {
+          mensajes.forEach(m => {
+            const tipo = m.remitenteDni === remitenteDni ? "enviado" : "recibido";
+            mostrarMensaje(m.contenido, tipo);
+          });
+        })
+        .catch(err => {
+          console.error("Error al cargar mensajes:", err);
+          alert("No se pudieron cargar los mensajes.");
+        });
+    });
+  
     function enviarMensaje() {
-      const input = document.getElementById("mensaje");
       const texto = input.value.trim();
       if (!texto) return;
-
-      mostrarMensaje(texto, 'enviado');
-      input.value = "";
-      input.focus();
-
-      setTimeout(() => {
-        mostrarMensaje("Gracias por tu mensaje. Te responderé pronto.", 'recibido');
-      }, 1000);
+  
+      const mensaje = {
+        remitenteDni,
+        destinatarioDni,
+        contenido: texto
+      };
+  
+      fetch("/api/mensajes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(mensaje)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Fallo en el envío");
+        return res.json();
+      })
+      .then(data => {
+        mostrarMensaje(data.contenido, 'enviado');
+        input.value = "";
+        input.focus();
+      })
+      .catch(err => {
+        console.error("Error al enviar mensaje:", err);
+        alert("No se pudo enviar el mensaje.");
+      });
     }
-
+  
     function mostrarMensaje(texto, tipo) {
-      const chat = document.getElementById("chat");
       const msgDiv = document.createElement("div");
       msgDiv.className = "mensaje " + tipo;
       msgDiv.textContent = texto;
       chat.appendChild(msgDiv);
       chat.scrollTop = chat.scrollHeight;
     }
-  </script>
+  
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("modoMedico");
+      localStorage.removeItem("medicoDniSimulado");
+    });
+  </script>  
 
 </body>
 </html>
