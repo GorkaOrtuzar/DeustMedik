@@ -36,6 +36,40 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+        }
+
+        .filters label {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .filters input {
+            padding: 0.4rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-top: 0.25rem;
+        }
+
+        .filters button {
+            padding: 0.6rem 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .filters button:hover {
+            background-color: #2980b9;
+        }
+
         .notification {
             background-color: #ecf0f1;
             padding: 1rem;
@@ -53,6 +87,11 @@
             color: #7f8c8d;
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
+        }
+
+        .notification-body {
+            font-size: 1rem;
+            color: #2c3e50;
         }
 
         .back-button {
@@ -83,33 +122,88 @@
         <a href="/inicio" class="back-button">Volver al Inicio</a>
     </nav>
 
-    <div class="container" id="notifications-container">
-        <div class="notification">
-            <div class="notification-title">Bienvenido de nuevo</div>
-            <div class="notification-time">Hace 5 segundos</div>
-            <div class="notification-body">Te damos la bienvenida a nuesto sistema.</div>
+    <div class="container">
+        <div class="filters">
+            <label>
+                Desde:
+                <input type="datetime-local" id="filter-desde">
+            </label>
+            <label>
+                Hasta:
+                <input type="datetime-local" id="filter-hasta">
+            </label>
+            <button id="filter-btn">Filtrar</button>
         </div>
 
-        <div class="notification">
-            <div class="notification-title">Recordatorio de cita</div>
-            <div class="notification-time">Hace 2 minutos</div>
-            <div class="notification-body">Recuerda siempre revisar tus próximas citas al final de la Web.</div>
+        <div id="notifications-container">
         </div>
-
-        <div class="notification">
-            <div class="notification-title">Resultado de análisis disponible</div>
-            <div class="notification-time">Hace 2 horas</div>
-            <div class="notification-body">Tu análisis de sangre ya está disponible.</div>
-        </div>
-
-        
     </div>
 
     <script>
-        // JS opcional: por ejemplo, podrías cargar notificaciones dinámicamente aquí si lo necesitas
-        // window.onload = () => {
-        //     alert("¡Has accedido a tus notificaciones!");
-        // }
+        document.addEventListener('DOMContentLoaded', () => {
+            const userToken = localStorage.getItem('userToken');
+            const modoMedico = localStorage.getItem('modoMedico') === 'true';
+            const usuarioDni = modoMedico
+                ? localStorage.getItem('medicoDniSimulado')
+                : localStorage.getItem('userDni');
+
+            if (!userToken || !usuarioDni) {
+                window.location.href = '/login';
+                return;
+            }
+
+            fetch(`/api/notificaciones/bienvenida?usuarioDni=${encodeURIComponent(usuarioDni)}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${userToken}` }
+            }).finally(loadNotifications);
+
+            document.getElementById('filter-btn').addEventListener('click', loadNotifications);
+
+            function loadNotifications() {
+                const desdeVal = document.getElementById('filter-desde').value;
+                const hastaVal = document.getElementById('filter-hasta').value;
+                const params = new URLSearchParams({ usuarioDni });
+                if (desdeVal) params.append('desde', desdeVal + ':00');
+                if (hastaVal) params.append('hasta', hastaVal + ':00');
+
+                fetch(`/api/notificaciones?${params.toString()}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${userToken}`
+                    }
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .then(list => renderNotifications(list))
+                .catch(err => {
+                    console.error('Error cargando notificaciones:', err);
+                    const container = document.getElementById('notifications-container');
+                    container.innerHTML = `<div class="no-notifications">Error: ${err.message}</div>`;
+                });
+            }
+
+            function renderNotifications(list) {
+                const container = document.getElementById('notifications-container');
+                container.innerHTML = '';
+                if (list.length === 0) {
+                    container.innerHTML = '<div class="no-notifications">No tienes notificaciones.</div>';
+                    return;
+                }
+                list.forEach(n => {
+                    const div = document.createElement('div');
+                    div.className = 'notification';
+                    const date = new Date(n.fecha);
+                    div.innerHTML = `
+                        <div class="notification-title">${n.titulo}</div>
+                        <div class="notification-time">${date.toLocaleString()}</div>
+                        <div class="notification-body">${n.cuerpo}</div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        });
     </script>
 </body>
 </html>

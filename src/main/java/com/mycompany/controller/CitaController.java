@@ -3,7 +3,9 @@ package com.mycompany.controller;
 import com.mycompany.DTO.ModificarCitaDTO;
 import com.mycompany.modelo.Cita;
 import com.mycompany.repositorio.RepositorioCita;
+import com.mycompany.service.NotificacionService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class CitaController {
+
+    @Autowired
+    private NotificacionService notiService;
 
     private final RepositorioCita repositorioCita;
 
@@ -28,6 +33,11 @@ public class CitaController {
     @PostMapping("/citas")
     public ResponseEntity<Cita> crearCita(@RequestBody Cita cita) {
         Cita nueva = repositorioCita.save(cita);
+        notiService.crearNotificacion(
+            cita.getPacienteDNI(),
+            "Cita programada",
+            "Tu cita para " + cita.getFechaHora() + " ha quedado confirmada."
+        );
         return ResponseEntity.ok(nueva);
     }
 
@@ -38,6 +48,11 @@ public class CitaController {
             cita.setFechaHora(dto.getFechaHora());
             cita.setMotivo(dto.getMotivo());
             repositorioCita.save(cita);
+            notiService.crearNotificacion(
+                cita.getPacienteDNI(),
+                "Cita programada",
+                "Tu cita para " + cita.getFechaHora() + " ha quedado actualizada."
+            );
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
     }

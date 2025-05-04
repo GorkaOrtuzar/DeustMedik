@@ -2,6 +2,7 @@ package com.mycompany.controller;
 
 import com.mycompany.modelo.Mensaje;
 import com.mycompany.service.MensajeService;
+import com.mycompany.service.NotificacionService;
 import com.mycompany.DTO.ConversacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,18 @@ public class MensajeController {
     @Autowired
     private MensajeService mensajeService;
 
+    @Autowired 
+    private NotificacionService notiService;
+
     @PostMapping
     public ResponseEntity<Mensaje> enviarMensaje(@RequestBody Mensaje mensaje) {
         System.out.println("📥 Recibido: " + mensaje.getRemitenteDni() + " → " + mensaje.getDestinatarioDni());
         Mensaje guardado = mensajeService.guardarMensaje(mensaje);
+        notiService.crearNotificacion(
+            guardado.getDestinatarioDni(),
+            "Nuevo mensaje de " + guardado.getRemitenteDni(),
+            guardado.getContenido()
+        );
         return ResponseEntity.ok(guardado);
     }
 

@@ -113,21 +113,26 @@
             const passwordInput = document.getElementById('password');
             const errorMessage = document.getElementById('error-message');
             
+            [dniInput, passwordInput].forEach(input =>
+                input.addEventListener('keyup', e => {
+                    if (e.key === 'Enter') {
+                    loginButton.click();
+                    }
+                })
+            );
+
             loginButton.addEventListener('click', async function() {
-                // Validación básica
                 if (!dniInput.value || !passwordInput.value) {
                     showError('Por favor, complete todos los campos');
                     return;
                 }
                 
-                // Preparar datos para el login
                 const credentials = {
                     dni: dniInput.value,
                     contrasenia: passwordInput.value
                 };
                 
                 try {
-                    // Llamada a la API
                     const response = await fetch('/autorizacion/login', {
                         method: 'POST',
                         headers: {
@@ -137,17 +142,13 @@
                     });
                     
                     if (response.ok) {
-                        // Login exitoso
                         const token = await response.text();
-                        // Guardamos el token y el DNI en localStorage
                         localStorage.setItem('userToken', token);
                         localStorage.setItem('userDni', dniInput.value);
                         
-                        // Redirigir a la página de inicio
                         window.location.href = '/inicio';
                         //window.location.href = 'inicio.html';
                     } else {
-                        // Login fallido
                         showError('DNI o contraseña incorrectos');
                     }
                 } catch (error) {
