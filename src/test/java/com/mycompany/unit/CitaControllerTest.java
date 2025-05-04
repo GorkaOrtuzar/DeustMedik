@@ -3,6 +3,7 @@ package com.mycompany.unit;
 import com.mycompany.controller.CitaController;
 import com.mycompany.DTO.ModificarCitaDTO;
 import com.mycompany.modelo.Cita;
+import com.mycompany.modelo.Notificacion;
 import com.mycompany.repositorio.RepositorioCita;
 import com.mycompany.service.NotificacionService;
 
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class CitaControllerTest {
 
@@ -31,12 +33,14 @@ class CitaControllerTest {
     @Mock
     private NotificacionService notiService;
 
-    @InjectMocks
     private CitaController citaController;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        citaController = new CitaController(repositorioCita);
+        ReflectionTestUtils.setField(citaController, "repositorioCita", repositorioCita);
+        ReflectionTestUtils.setField(citaController, "notiService",   notiService);
     }
 
     @Test
@@ -55,8 +59,10 @@ class CitaControllerTest {
     @Test
     void crearCita_guardaYCreaCita() {
         Cita cita = new Cita();
+        cita.setPacienteDNI("12345");
         when(repositorioCita.save(cita)).thenReturn(cita);
-        doNothing().when(notiService).crearNotificacion(anyString(), anyString(), anyString());
+        when(notiService.crearNotificacion(anyString(), anyString(), anyString()))
+            .thenReturn(new Notificacion());
 
         ResponseEntity<Cita> respuesta = citaController.crearCita(cita);
 
@@ -64,6 +70,8 @@ class CitaControllerTest {
         assertEquals(200, respuesta.getStatusCode().value());
         assertEquals(cita, respuesta.getBody());
         verify(repositorioCita, times(1)).save(cita);
+        verify(notiService, times(1))
+            .crearNotificacion(anyString(), anyString(), anyString());
     }
 
     @Test
@@ -74,14 +82,18 @@ class CitaControllerTest {
         dto.setMotivo("Motivo actualizado");
 
         Cita citaExistente = new Cita();
+        citaExistente.setPacienteDNI("12345");
         when(repositorioCita.findById(1L)).thenReturn(Optional.of(citaExistente));
-        doNothing().when(notiService).crearNotificacion(anyString(), anyString(), anyString());
+        when(notiService.crearNotificacion(anyString(), anyString(), anyString()))
+            .thenReturn(new Notificacion());
 
         ResponseEntity<?> respuesta = citaController.actualizarCita(dto);
 
         assertEquals(200, respuesta.getStatusCode().value());
         verify(repositorioCita, times(1)).findById(1L);
         verify(repositorioCita, times(1)).save(citaExistente);
+        verify(notiService, times(1))
+            .crearNotificacion(anyString(), anyString(), anyString());
         assertEquals(dto.getFechaHora(), citaExistente.getFechaHora());
         assertEquals(dto.getMotivo(), citaExistente.getMotivo());
     }
@@ -98,5 +110,7 @@ class CitaControllerTest {
         assertEquals(404, respuesta.getStatusCode().value());
         verify(repositorioCita, times(1)).findById(1L);
         verify(repositorioCita, never()).save(any(Cita.class));
+        verify(notiService, never())
+            .crearNotificacion(anyString(), anyString(), anyString());
     }
 }
