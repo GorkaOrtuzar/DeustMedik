@@ -192,6 +192,7 @@
         <div class="navbar-brand">Sistema Médico</div>
         <div class="user-info">
             <span class="user-name" id="user-name" th:if="${usuario != null}" th:text="${usuario.nombre}">Cargando...</span>
+            <button id="profile-btn" class="notif-btn" title="Ver perfil">👤</button>
             <button id="notifications-btn" class="notif-btn" title="Ver notificaciones">🔔</button>
             <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
         </div>
@@ -309,13 +310,11 @@
                 return;
             }
     
-            // Mostrar el DNI como nombre de usuario
             const userNameElement = document.getElementById('user-name');
             if (userNameElement) {
                 userNameElement.textContent = `Usuario: ${userDni}`;
             }
     
-            // ✅ Asegurarse de que el botón existe antes de añadir el event listener
             const logoutBtn = document.getElementById('logout-btn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', function () {
@@ -335,8 +334,14 @@
             } else {
                 console.warn("No se encontro el botón de Notificación");
             }
-    
-            // Cargar citas futuras
+
+            const profileBtn = document.getElementById('profile-btn');
+            if (profileBtn) {
+                profileBtn.addEventListener('click', function () {
+                    window.location.href = '/proximamente';
+                });
+            }
+
             cargarProximasCitas();
         });
     
