@@ -2,11 +2,15 @@ package com.mycompany.integracion;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.modelo.Paciente;
+
+import jakarta.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -14,6 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = com.mycompany.service.RestApiApplication.class)
 @AutoConfigureMockMvc
+@Transactional
+@Rollback
 public class RegistroControllerIntegrationTest {
 
     @Autowired
@@ -25,7 +31,7 @@ public class RegistroControllerIntegrationTest {
     @Test
     public void registrarPacienteTest() throws Exception {
         Paciente paciente = new Paciente();
-        paciente.setDni("99999998X");
+        paciente.setDni("99999999J");
         paciente.setNombre("Juan");
         paciente.setApellido("Pérez");
         paciente.setCorreo("juan.perez@example.com");

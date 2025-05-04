@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class MedicoServiceTestRendimiento {
+public class MedicoServiceTestRendimientoTest {
     private RepositorioMedico repositorioMedico;
     private RepositorioCita repositorioCita;
     private MedicoService medicoService;
