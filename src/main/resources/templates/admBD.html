@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vista Administrativa - Base de Datos</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2rem; background: #f2f2f2; }
+        h2 { margin-top: 2rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .volver-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .volver-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vista Administrativa - Datos del Sistema</h1>
+
+    <a href="/inicio" class="volver-btn">⬅ Volver al Inicio</a>
+
+    <h2>Pacientes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>DNI</th><th>Nombre</th><th>Apellido</th><th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${pacientes}">
+                <td th:text="${p.dni}"></td>
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.apellido}"></td>
+                <td th:text="${p.correo}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Médicos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th><th>Apellido</th><th>Especialidad</th><th>Contacto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="m : ${medicos}">
+                <td th:text="${m.nombre}"></td>
+                <td th:text="${m.apellido}"></td>
+                <td th:text="${m.especialidad}"></td>
+                <td th:text="${m.contacto}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Citas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th><th>Motivo</th><th>Médico</th><th>Paciente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${citas}">
+                <td th:text="${#dates.format(c.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${c.motivo}"></td>
+                <td th:text="${c.medico.nombre + ' ' + c.medico.apellido}"></td>
+                <td th:text="${c.paciente.nombre + ' ' + c.paciente.apellido}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

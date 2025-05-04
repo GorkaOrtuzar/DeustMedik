@@ -4,6 +4,8 @@ import com.mycompany.controller.CitaController;
 import com.mycompany.DTO.ModificarCitaDTO;
 import com.mycompany.modelo.Cita;
 import com.mycompany.repositorio.RepositorioCita;
+import com.mycompany.service.NotificacionService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,12 +20,16 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class CitaControllerTest {
 
     @Mock
     private RepositorioCita repositorioCita;
+
+    @Mock
+    private NotificacionService notiService;
 
     @InjectMocks
     private CitaController citaController;
@@ -50,6 +56,7 @@ class CitaControllerTest {
     void crearCita_guardaYCreaCita() {
         Cita cita = new Cita();
         when(repositorioCita.save(cita)).thenReturn(cita);
+        doNothing().when(notiService).crearNotificacion(anyString(), anyString(), anyString());
 
         ResponseEntity<Cita> respuesta = citaController.crearCita(cita);
 
@@ -68,6 +75,7 @@ class CitaControllerTest {
 
         Cita citaExistente = new Cita();
         when(repositorioCita.findById(1L)).thenReturn(Optional.of(citaExistente));
+        doNothing().when(notiService).crearNotificacion(anyString(), anyString(), anyString());
 
         ResponseEntity<?> respuesta = citaController.actualizarCita(dto);
 
