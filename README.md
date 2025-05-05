@@ -9,7 +9,14 @@ Compiling the project
 mvn compile
 
 Launching the tests
-mvn test
+    mvn test
+    Launching Junit test
+        mvn test  
+    Launching perdormance test
+        mvn test -P r
+    Launching intefration test
+        mvn test -P i
+
 
 The project includes:
 
