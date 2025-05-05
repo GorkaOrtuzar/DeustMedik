@@ -110,9 +110,8 @@ mvn clean
 
 Para consultas o sugerencias relacionadas con este proyecto, puedes contactar con el equipo desarrollador:
 
-* **Nombre:** \[Tu nombre o equipo]
-* **Correo electrónico:** \[Tu correo electrónico o del equipo]
-* **Repositorio:** \[Enlace al repositorio GitHub/GitLab]
+* **Nombre:** \DeustoMedik
+* **Repositorio:** \https://github.com/GorkaOrtuzar/DeustMedik
 
 ---
 
