@@ -62,7 +62,8 @@ mvn test -P i
 # Pruebas de rendimiento
 mvn test -P r
 ```
-
+* **Ejecutar proyecto:**
+mvn spring-boot:run
 * **Generar versión empaquetada (JAR):**
 
 ```shell
