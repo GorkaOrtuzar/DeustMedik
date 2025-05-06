@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acerca de DeustMedik</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; margin: 0; padding: 0; }
+    .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h1 { font-size: 2.2rem; color: #3f51b5; margin-bottom: 16px; }
+    h2 { font-size: 1.6rem; margin-top: 24px; color: #2c3e50; }
+    p { margin: 12px 0; line-height: 1.6; }
+    ul { margin: 12px 0 12px 20px; }
+    code { background: #e0e0e0; padding: 2px 4px; border-radius: 4px; font-family: monospace; }
+    .back-btn { display: inline-block; margin-top: 24px; padding: 8px 16px; background: #3f51b5; color: #fff; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; }
+    .back-btn:hover { background: #303f9f; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DeustMedik</h1>
+    <h2>Descripción del Proyecto</h2>
+    <p>DeustMedik es una aplicación web desarrollada con Spring Boot y Maven, orientada a gestionar médicos, pacientes y citas médicas. Ofrece funcionalidades para la creación, edición y eliminación de registros, así como la gestión completa de citas médicas mediante una base de datos SQL externa.</p>
+
+    <h2>Tecnologías utilizadas</h2>
+    <ul>
+      <li>Java 17</li>
+      <li>Spring Boot (Web, Data JPA)</li>
+      <li>Maven (gestión de dependencias)</li>
+      <li>JUnit & Mockito (testing)</li>
+      <li>JaCoCo (cobertura de código)</li>
+      <li>Base de Datos SQL (MySQL recomendada)</li>
+      <li>Servidor embebido Tomcat</li>
+    </ul>
+
+    <h2>Estructura del Proyecto</h2>
+    <ul>
+      <li><code>src/main/java</code>: Código fuente principal del proyecto.</li>
+      <li><code>src/main/resources</code>: Archivos de configuración como <code>application.properties</code>.</li>
+      <li><code>src/test/java</code>:
+        <ul>
+          <li><code>test/unit</code>: Pruebas unitarias de la lógica de servicios.</li>
+          <li><code>test/integration</code>: Pruebas de integración para flujos completos.</li>
+          <li><code>test/rendimiento</code>: Pruebas de rendimiento de repositorios.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Configuración inicial</h2>
+    <p>Configura la conexión a la base de datos en <code>src/main/resources/application.properties</code>. Ejemplo:</p>
+    <pre>spring.datasource.url=jdbc:mysql://localhost:3306/deustmedik
+spring.datasource.username=usuario
+spring.datasource.password=contraseña
+spring.jpa.hibernate.ddl-auto=update</pre>
+
+    <h2>Comandos básicos</h2>
+    <ul>
+      <li><strong>Compilar:</strong> <code>mvn compile</code></li>
+      <li><strong>Pruebas unitarias:</strong> <code>mvn test</code></li>
+      <li><strong>Pruebas de integración:</strong> <code>mvn test -P i</code></li>
+      <li><strong>Pruebas de rendimiento:</strong> <code>mvn test -P r</code></li>
+      <li><strong>Ejecutar:</strong> <code>mvn spring-boot:run</code></li>
+      <li><strong>Empaquetar JAR:</strong> <code>mvn package</code></li>
+      <li><strong>Correr JAR:</strong> <code>java -jar target/DeustMedik-1.0-SNAPSHOT.jar</code></li>
+    </ul>
+
+    <h2>Documentación</h2>
+    <ul>
+      <li><strong>Javadoc:</strong> <code>mvn javadoc:javadoc</code> → <code>target/site/apidocs/index.html</code></li>
+      <li><strong>JaCoCo:</strong> Informe en <code>target/site/jacoco/index.html</code></li>
+    </ul>
+
+    <h2>Limpieza</h2>
+    <p><code>mvn clean</code> elimina los artefactos de compilaciones previas.</p>
+
+    <h2>Soporte y contacto</h2>
+    <ul>
+      <li><strong>Equipo:</strong> DeustMedik</li>
+      <li><strong>Repositorio:</strong> <a href="https://github.com/GorkaOrtuzar/DeustMedik" target="_blank">GitHub</a></li>
+    </ul>
+
+    <button class="back-btn" onclick="history.back()">⬅ Volver</button>
+  </div>
+</body>
+</html>
