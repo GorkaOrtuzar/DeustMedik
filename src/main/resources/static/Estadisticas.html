@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estadísticas</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fa; }
+    h1, h2 { text-align: center; }
+    .chart-container { max-width: 600px; margin: 40px auto; }
+  </style>
+</head>
+<body>
+  <h1>Reportes y Gráficas</h1>
+
+  <a href="/inicio" class="volver-btn">⬅ Volver al Inicio</a>
+
+  <div class="chart-container">
+    <h2>Citas por Mes</h2>
+    <canvas id="citasPorMesChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>Médicos Más Solicitados</h2>
+    <canvas id="medicosChart"></canvas>
+  </div>
+
+  <script>
+    fetch('/api/estadisticas/citas-por-mes')
+      .then(r => r.json())
+      .then(data => {
+        const labels = data.map(d => `${d.year}-${String(d.month).padStart(2,'0')}`);
+        const values = data.map(d => d.total);
+        new Chart(document.getElementById('citasPorMesChart'), {
+          type: 'bar',
+          data: { labels, datasets: [{ label: 'Citas', data: values }] },
+          options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+      });
+
+    fetch('/api/estadisticas/medicos-mas-solicitados')
+      .then(r => r.json())
+      .then(data => {
+        const labels = data.map(d => `${d.nombre} ${d.apellido}`);
+        const values = data.map(d => d.totalCitas);
+        new Chart(document.getElementById('medicosChart'), {
+          type: 'pie',
+          data: { labels, datasets: [{ data: values }] },
+          options: { responsive: true }
+        });
+      });
+  </script>
+</body>
+</html>

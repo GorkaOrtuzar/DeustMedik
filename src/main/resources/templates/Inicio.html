@@ -415,6 +415,21 @@
             }
         });
 
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key.toLowerCase() === 'a') {
+                e.preventDefault();
+                //window.location.href = '/proximamente';
+                window.location.href = '/Estadisticas';
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+        if (e.ctrlKey && e.key.toLowerCase() === 'i') {
+            e.preventDefault();
+            window.location.href = '/Chat';
+        }
+        });
+
     </script>
     
 </body>
