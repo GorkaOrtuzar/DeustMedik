@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -21,6 +22,11 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -119,5 +125,30 @@ class CitaControllerTest {
 
         then(repositorioCita).should(never()).deleteById(anyLong());
         then(notiService).shouldHaveNoInteractions();
+    }
+
+    @DisplayName("POST /api/citas → 200 si se crea correctamente y notifica")
+    @Test
+    void crearCita_devuelve200yGuardaYNotifica() throws Exception {
+        Cita nueva = new Cita();
+        nueva.setId(10L);
+        nueva.setPacienteDNI("PAC999");
+        nueva.setFechaHora(LocalDateTime.of(2025, 6, 1, 10, 0));
+        nueva.setMotivo("Revisión general");
+
+        when(repositorioCita.save(any(Cita.class))).thenReturn(nueva);
+
+        mvc.perform(
+                post("/api/citas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(nueva))
+        ).andExpect(status().isOk());
+
+        then(repositorioCita).should().save(any(Cita.class));
+        then(notiService).should().crearNotificacion(
+                eq("PAC999"),
+                eq("Cita programada"),
+                contains("ha quedado confirmada")
+        );
     }
 }
