@@ -4,59 +4,82 @@ import com.mycompany.modelo.Medico;
 import com.mycompany.repositorio.RepositorioCita;
 import com.mycompany.repositorio.RepositorioMedico;
 import com.mycompany.service.MedicoService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.util.Collections;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class MedicoServiceTest {
+@ExtendWith(MockitoExtension.class)
+class MedicoServiceTest {
 
+    @Mock
     private RepositorioMedico repositorioMedico;
+    @Mock
     private RepositorioCita repositorioCita;
-    private MedicoService medicoService;
+    @InjectMocks
+    private MedicoService service;
 
-    @BeforeEach
-    void setUp() {
-        repositorioMedico = mock(RepositorioMedico.class);
-        repositorioCita = mock(RepositorioCita.class);
-        medicoService = new MedicoService(repositorioMedico, repositorioCita);
+    @Test
+    void obtenerMedicos_devuelveListaDesdeRepositorio() {
+        Medico m1 = new Medico();
+        Medico m2 = new Medico();
+        when(repositorioMedico.findAll()).thenReturn(List.of(m1, m2));
+
+        List<Medico> result = service.obtenerMedicos();
+
+        assertEquals(2, result.size());
+        assertSame(m1, result.get(0));
+        assertSame(m2, result.get(1));
+        verify(repositorioMedico).findAll();
     }
 
     @Test
-    void testObtenerMedicos() {
-        Medico medico = new Medico();
-        when(repositorioMedico.findAll()).thenReturn(Collections.singletonList(medico));
+    void obtenerDisponibilidadMedico_medicoNoExiste_devuelveListaVacia() {
+        when(repositorioMedico.findById(100L)).thenReturn(Optional.empty());
 
-        List<Medico> resultado = medicoService.obtenerMedicos();
+        List<LocalDateTime> slots = service.obtenerDisponibilidadMedico(100L);
 
-        assertEquals(1, resultado.size());
-        verify(repositorioMedico, times(1)).findAll();
+        assertTrue(slots.isEmpty(), "Si no encuentra al médico debe devolver lista vacía");
+        verify(repositorioMedico).findById(100L);
     }
 
     @Test
-    void testBuscarPorNombreYApellido() {
-        Medico medico = new Medico();
-        when(repositorioMedico.findByNombreAndApellido("Juan", "Pérez")).thenReturn(medico);
+    void obtenerDisponibilidadMedico_medicoExiste_generaSlotsCorrectos() {
+        when(repositorioMedico.findById(1L)).thenReturn(Optional.of(new Medico()));
 
-        Medico resultado = medicoService.buscarPorNombreYApellido("Juan", "Pérez");
+        List<LocalDateTime> slots = service.obtenerDisponibilidadMedico(1L);
 
-        assertNotNull(resultado);
-        verify(repositorioMedico, times(1)).findByNombreAndApellido("Juan", "Pérez");
+        assertEquals(32, slots.size());
+
+        LocalDate today = LocalDate.now();
+        LocalDateTime primero = LocalDateTime.of(today, LocalTime.of(9, 0));
+        LocalDateTime ultimo = LocalDateTime.of(today, LocalTime.of(16, 45));
+
+        assertEquals(primero, slots.get(0));
+        assertEquals(ultimo, slots.get(slots.size() - 1));
+        verify(repositorioMedico).findById(1L);
     }
 
     @Test
-    void testObtenerDisponibilidadMedicoMedicoNoEncontrado() {
-        when(repositorioMedico.findById(1L)).thenReturn(Optional.empty());
+    void buscarPorNombreYApellido_delegadoAlRepositorio() {
+        Medico esperado = new Medico();
+        when(repositorioMedico.findByNombreAndApellido("Ana", "López"))
+            .thenReturn(esperado);
 
-        List<?> disponibilidad = medicoService.obtenerDisponibilidadMedico(1L);
+        Medico result = service.buscarPorNombreYApellido("Ana", "López");
 
-        assertTrue(disponibilidad.isEmpty());
-        verify(repositorioMedico, times(1)).findById(1L);
+        assertSame(esperado, result);
+        verify(repositorioMedico).findByNombreAndApellido("Ana", "López");
     }
 }

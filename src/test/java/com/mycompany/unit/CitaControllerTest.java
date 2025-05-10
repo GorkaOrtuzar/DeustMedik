@@ -1,116 +1,123 @@
 package com.mycompany.unit;
 
-import com.mycompany.controller.CitaController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.DTO.ModificarCitaDTO;
 import com.mycompany.modelo.Cita;
-import com.mycompany.modelo.Notificacion;
 import com.mycompany.repositorio.RepositorioCita;
 import com.mycompany.service.NotificacionService;
+import com.mycompany.service.RestApiApplication;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
+import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
-import org.springframework.test.util.ReflectionTestUtils;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest(classes = RestApiApplication.class)
+@AutoConfigureMockMvc
 class CitaControllerTest {
 
-    @Mock
-    private RepositorioCita repositorioCita;
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private ObjectMapper mapper;
 
-    @Mock
+    @MockBean
+    private RepositorioCita repositorioCita;
+    @MockBean
     private NotificacionService notiService;
 
-    private CitaController citaController;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        citaController = new CitaController(repositorioCita);
-        ReflectionTestUtils.setField(citaController, "repositorioCita", repositorioCita);
-        ReflectionTestUtils.setField(citaController, "notiService",   notiService);
-    }
-
+    @DisplayName("PUT /api/citas → 200 si la cita existe y se actualiza correctamente")
     @Test
-    void obtenerTodasLasCitas_retornaListaDeCitas() {
-        Cita cita1 = new Cita();
-        Cita cita2 = new Cita();
-        when(repositorioCita.findAll()).thenReturn(Arrays.asList(cita1, cita2));
-
-        List<Cita> resultado = citaController.obtenerTodasLasCitas();
-
-        assertNotNull(resultado);
-        assertEquals(2, resultado.size());
-        verify(repositorioCita, times(1)).findAll();
-    }
-
-    @Test
-    void crearCita_guardaYCreaCita() {
-        Cita cita = new Cita();
-        cita.setPacienteDNI("12345");
-        when(repositorioCita.save(cita)).thenReturn(cita);
-        when(notiService.crearNotificacion(anyString(), anyString(), anyString()))
-            .thenReturn(new Notificacion());
-
-        ResponseEntity<Cita> respuesta = citaController.crearCita(cita);
-
-        assertNotNull(respuesta);
-        assertEquals(200, respuesta.getStatusCode().value());
-        assertEquals(cita, respuesta.getBody());
-        verify(repositorioCita, times(1)).save(cita);
-        verify(notiService, times(1))
-            .crearNotificacion(anyString(), anyString(), anyString());
-    }
-
-    @Test
-    void actualizarCita_actualizaCitaExistente() {
+    void actualizarCita_existe_devuelve200yGuardaYNotifica() throws Exception {
         ModificarCitaDTO dto = new ModificarCitaDTO();
         dto.setId(1L);
+        LocalDateTime nuevaFecha = LocalDateTime.of(2025,5,10,15,0);
+        dto.setFechaHora(nuevaFecha);
+        dto.setMotivo("Cita de prueba");
+
+        Cita existente = new Cita();
+        existente.setId(1L);
+        existente.setPacienteDNI("PAC123");
+        existente.setFechaHora(LocalDateTime.of(2025,1,1,9,0));
+        existente.setMotivo("Anterior");
+        when(repositorioCita.findById(1L)).thenReturn(Optional.of(existente));
+
+        mvc.perform(put("/api/citas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dto))
+        )
+        .andExpect(status().isOk());
+
+        ArgumentCaptor<Cita> captor = ArgumentCaptor.forClass(Cita.class);
+        then(repositorioCita).should().save(captor.capture());
+        Cita guardada = captor.getValue();
+        assertThat(guardada.getId()).isEqualTo(1L);
+        assertThat(guardada.getFechaHora()).isEqualTo(nuevaFecha);
+        assertThat(guardada.getMotivo()).isEqualTo("Cita de prueba");
+
+        then(notiService).should().crearNotificacion(
+                eq("PAC123"),
+                eq("Cita programada"),
+                contains("ha quedado actualizada")
+        );
+    }
+
+    @DisplayName("PUT /api/citas → 404 si la cita NO existe")
+    @Test
+    void actualizarCita_noExiste_devuelve404() throws Exception {
+        ModificarCitaDTO dto = new ModificarCitaDTO();
+        dto.setId(99L);
         dto.setFechaHora(LocalDateTime.now());
-        dto.setMotivo("Motivo actualizado");
+        dto.setMotivo("No importa");
 
-        Cita citaExistente = new Cita();
-        citaExistente.setPacienteDNI("12345");
-        when(repositorioCita.findById(1L)).thenReturn(Optional.of(citaExistente));
-        when(notiService.crearNotificacion(anyString(), anyString(), anyString()))
-            .thenReturn(new Notificacion());
+        when(repositorioCita.findById(99L)).thenReturn(Optional.empty());
 
-        ResponseEntity<?> respuesta = citaController.actualizarCita(dto);
+        mvc.perform(put("/api/citas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(dto))
+        )
+        .andExpect(status().isNotFound());
 
-        assertEquals(200, respuesta.getStatusCode().value());
-        verify(repositorioCita, times(1)).findById(1L);
-        verify(repositorioCita, times(1)).save(citaExistente);
-        verify(notiService, times(1))
-            .crearNotificacion(anyString(), anyString(), anyString());
-        assertEquals(dto.getFechaHora(), citaExistente.getFechaHora());
-        assertEquals(dto.getMotivo(), citaExistente.getMotivo());
+        then(repositorioCita).should(never()).save(any());
+        then(notiService).should(never()).crearNotificacion(anyString(), anyString(), anyString());
     }
 
+    @DisplayName("DELETE /api/citas/{id} → 204 si la cita existe y se elimina")
     @Test
-    void actualizarCita_citaNoEncontrada() {
-        ModificarCitaDTO dto = new ModificarCitaDTO();
-        dto.setId(1L);
+    void eliminarCita_existe_devuelve204yElimina() throws Exception {
+        when(repositorioCita.existsById(5L)).thenReturn(true);
 
-        when(repositorioCita.findById(1L)).thenReturn(Optional.empty());
+        mvc.perform(delete("/api/citas/5"))
+           .andExpect(status().isNoContent());
 
-        ResponseEntity<?> respuesta = citaController.actualizarCita(dto);
+        then(repositorioCita).should().deleteById(5L);
+        then(notiService).shouldHaveNoInteractions();
+    }
 
-        assertEquals(404, respuesta.getStatusCode().value());
-        verify(repositorioCita, times(1)).findById(1L);
-        verify(repositorioCita, never()).save(any(Cita.class));
-        verify(notiService, never())
-            .crearNotificacion(anyString(), anyString(), anyString());
+    @DisplayName("DELETE /api/citas/{id} → 404 si la cita NO existe")
+    @Test
+    void eliminarCita_noExiste_devuelve404() throws Exception {
+        when(repositorioCita.existsById(42L)).thenReturn(false);
+
+        mvc.perform(delete("/api/citas/42"))
+           .andExpect(status().isNotFound());
+
+        then(repositorioCita).should(never()).deleteById(anyLong());
+        then(notiService).shouldHaveNoInteractions();
     }
 }
