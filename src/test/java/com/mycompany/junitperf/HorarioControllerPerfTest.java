@@ -1,36 +1,60 @@
 package com.mycompany.junitperf;
 
-import com.mycompany.controller.HorarioController;
-import com.mycompany.service.HorarioService;
-import com.mycompany.modelo.Horario;
+import com.github.noconnor.junitperf.JUnitPerfInterceptor;
+import com.github.noconnor.junitperf.JUnitPerfTest;
+import com.github.noconnor.junitperf.JUnitPerfTestRequirement;
+import com.github.noconnor.junitperf.JUnitPerfTestActiveConfig;
+import com.github.noconnor.junitperf.JUnitPerfReportingConfig;
+import com.github.noconnor.junitperf.reporting.providers.CsvReportGenerator;
+import com.github.noconnor.junitperf.reporting.providers.HtmlReportGenerator;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
+import com.mycompany.controller.HorarioController;
+import com.mycompany.service.HorarioService;
+import com.mycompany.modelo.Horario;
+
+import java.io.File;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(JUnitPerfInterceptor.class)
 public class HorarioControllerPerfTest {
 
-    private HorarioController controller;
-    private HorarioService horarioService;
+  @BeforeAll
+  static void createReportDir() {
+    new File("target/reports").mkdirs();
+  }
 
-    @BeforeEach
-    void setUp() {
-        horarioService = Mockito.mock(HorarioService.class);
-        controller = new HorarioController(horarioService);
+  @JUnitPerfTestActiveConfig
+  private static final JUnitPerfReportingConfig PERF_CONFIG =
+    JUnitPerfReportingConfig.builder()
+      .reportGenerator(new CsvReportGenerator("target/reports/junitperf_report.csv"))
+      .reportGenerator(new HtmlReportGenerator("target/reports/junitperf_report.html"))
+      .build();
 
-        Mockito.when(horarioService.obtenerHorariosPorMedico(1L))
-               .thenReturn(Collections.singletonList(new Horario()));
-    }
+  private HorarioController controller;
 
-    @SuppressWarnings("deprecation")
-    @Test
-    @JUnitPerfTest(threads = 10, durationMs = 1000, maxExecutionsPerSecond = 20)
-    public void testObtenerHorariosPorMedicoPerformance() {
-        ResponseEntity<?> response = controller.obtenerHorariosPorMedico(1L);
-        assertEquals(200, response.getStatusCodeValue());
-    }
+  @BeforeEach
+  void setUp() {
+    HorarioService svc = Mockito.mock(HorarioService.class);
+    Mockito.when(svc.obtenerHorariosPorMedico(1L))
+           .thenReturn(Collections.<Horario>emptyList());
+    controller = new HorarioController(svc);
+  }
+
+  @Test
+  @JUnitPerfTest(threads = 5, durationMs = 10_000, maxExecutionsPerSecond = 100)
+  @JUnitPerfTestRequirement(meanLatency = 50)
+  void testObtenerHorariosPorMedicoPerformance() {
+    ResponseEntity<List<Horario>> resp = controller.obtenerHorariosPorMedico(1L);
+    assertEquals(200, resp.getStatusCodeValue());
+  }
 }
