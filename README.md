@@ -93,6 +93,10 @@ La documentación generada estará disponible en:
 ```
 target/site/apidocs/index.html
 ```
+* **Documentación Doxygen:**
+La documentacion se genera automaticamente
+
+docs/html/index.html
 
 * **Reporte de cobertura JaCoCo:**
   Al ejecutar las pruebas, se generará automáticamente un informe de cobertura de código disponible en:
