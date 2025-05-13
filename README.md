@@ -61,6 +61,8 @@ mvn test -P i
 
 # Pruebas de rendimiento
 mvn test -P r
+# Pruebas de rendimiento de JUnitPerf
+mvn test -P perf
 ```
 * **Ejecutar proyecto:**
 mvn spring-boot:run
